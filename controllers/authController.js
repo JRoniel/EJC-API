@@ -7,7 +7,7 @@ module.exports = {
 
     try {
       const user = await userModel.getUserByUsernameAndPassword(username, password);
-      
+       
       if (user === null) {
         console.log('[LOG-EVENT] Credenciais informadas inválidas  ou incorretas');
         return; // Encerra a função caso as credenciais sejam inválidas

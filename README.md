@@ -4,7 +4,7 @@
 
 Aplicação web para gerenciamento escolar pratico.
 
-## <span style="color: blue;">Tabela de Conteúdos</span>
+## <span style="color: blue;">Tabela de Conteúdos</span> 
 
 - [<span style="color: blue;">Instalação</span>](#instalação)
 - [<span style="color: blue;">Configuração</span>](#configuração)

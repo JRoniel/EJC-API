@@ -16,7 +16,7 @@ app.use(session({
     secret: process.env.SESSION_TOKEN, // Defina o segredo da sessão no seu arquivo .env
     resave: false,
     saveUninitialized: true
-  }));
+  })); 
 
 // Configurar o mecanismo de visualização
 app.set('view engine', 'ejs'); // Use o mecanismo EJS para renderizar as visualizações

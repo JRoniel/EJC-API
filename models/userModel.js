@@ -21,7 +21,7 @@ try {
 
 module.exports = {
   getUserByUsernameAndPassword: async (username, password) => {
-    try {
+    try { 
 
       console.log('[LOG-EVENT]>> Chamando banco de dados para consulta');
 

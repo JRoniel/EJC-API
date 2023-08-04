@@ -6,4 +6,4 @@ const dashboardController = require('../controllers/dashboardController');
 // Rota protegida que requer um cookie de token
 router.get('/', verifyTokenCookie, dashboardController.showDashboard);
 
-module.exports = router;
+module.exports = router; 

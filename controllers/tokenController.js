@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const cookie = require('cookie-parser');
 
-module.exports = {
+module.exports = { 
   createToken: (userData) => {
     try {
       const token = jwt.sign(userData, process.env.JWT_SECRET, { expiresIn: '1h' });
