@@ -22,17 +22,10 @@ app.use(session({
 app.set('view engine', 'ejs'); // Use o mecanismo EJS para renderizar as visualizações
 app.set('views', __dirname + '/views'); // Defina a pasta de visualizações como "views"
 
-//Carregando rotas da aplicação
-const authRoutes = require('./routes/authRouter');
-const dashboardRoutes = require('./routes/dashboardRouter');
-app.use('/auth', authRoutes); // Todas as rotas de autenticação terão /auth como prefixo na URL
-app.use('/dashboard', dashboardRoutes); // Todas as rotas do painel de controle terão /dashboard como prefixo na URL
-
-app.get('/', (req, res) => {
-    res.redirect('/auth');
-  });
+const render = require('./routes/render');
+app.use('/', render); 
 
 //Iniciando servidor na porta indicada
 app.listen(port, (req, res) => {
-    console.log(`[LOG-EVENT] servidor rodando em http://localhost:${port}`);
+    console.log(`[LOG-START] servidor rodando em http://localhost:${port}`);
 });
