@@ -2,9 +2,10 @@ const jwt = require('jsonwebtoken');
 
 function verifyTokenCookie(req, res, next) {
   const token = req.cookies.token;
- 
+
   if (!token) {
-    return false;
+    console.error('[LOG-EVENT] Token não encontrado, redirecionando para página de autenticação');
+    return res.redirect('/auth'); // Redireciona para a página de autenticação
   }
 
   try {
@@ -13,7 +14,7 @@ function verifyTokenCookie(req, res, next) {
     next(); // Continue para a próxima rota ou middleware
   } catch (error) {
     console.error('Erro ao verificar token:', error);
-    return false;
+    return res.redirect('/auth'); // Redireciona para a página de autenticação
   }
 }
 
