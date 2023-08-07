@@ -3,7 +3,7 @@ const router = express.Router();
 
 const authController = require('../controllers/authController');
 const checkAuthenticated = require('../middlewares/checkAuthenticated'); 
-const tokenController = require('../controllers/tokenController');
+const tokenController = require('../controllers/cookieController');
  
 // Use o middleware para verificar se o usuário já está autenticado antes de acessar /auth
 router.get('/', checkAuthenticated, (req, res) => {

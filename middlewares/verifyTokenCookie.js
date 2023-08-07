@@ -1,10 +1,15 @@
 const jwt = require('jsonwebtoken');
+const express = require('express');
+const cookieParser = require('cookie-parser');
+
+const app = express();
+app.use(cookieParser());
 
 function verifyTokenCookie(req, res, next) {
   const token = req.cookies.token;
 
-  if (!token) {
-    console.error('[LOG-EVENT] Token não encontrado, redirecionando para página de autenticação');
+  if (!token || !token.username) {
+    console.error('[LOG-EVENT] Token não encontrado ou nome de usuário ausente, redirecionando para página de autenticação');
     return res.redirect('/auth'); // Redireciona para a página de autenticação
   }
 

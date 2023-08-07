@@ -1,5 +1,11 @@
 const userModel = require('../models/userModel');
-const tokenController = require('../controllers/tokenController');
+const cookieController = require('../controllers/cookieController');
+
+const express = require('express');
+const cookieParser = require('cookie-parser');
+
+const app = express();
+app.use(cookieParser());
 
 module.exports = {
   login: async (req, res) => {
@@ -8,29 +14,29 @@ module.exports = {
     try {
       const user = await userModel.getUserByUsername(username);
 
-      if (user === null) {
+      if (!user) {
         console.log('[LOG-EVENT] Credenciais informadas inválidas ou incorretas');
-        return; // Encerra a função caso as credenciais sejam inválidas
+        return res.redirect('/login'); // Redireciona de volta à página de login
       }
 
       const passwordMatch = await userModel.comparePassword(user, password);
 
       if (!passwordMatch) {
         console.log('[LOG-EVENT] Senha incorreta');
-        return; // Encerra a função caso a senha esteja incorreta
+        return res.redirect('/login'); // Redireciona de volta à página de login
       }
 
       // Autenticação bem-sucedida
-      const userData = { userId: user.id };
-      const token = tokenController.createToken(userData);
+      const token = cookieController.createToken(username);
+
       if (token) {
-        tokenController.addCookie(res, 'token', token, { httpOnly: true, maxAge: 3600000 });
+        cookieController.addCookie(res, 'token', token, { httpOnly: true, maxAge: 3600000 });
       }
 
-      res.redirect('/dashboard'); // Renderiza a página "dashboard.ejs" após o login bem-sucedido
+      return res.redirect('/dashboard'); // Redireciona para a página "dashboard.ejs" após o login bem-sucedido
     } catch (error) {
       console.error('Erro ao fazer login:', error);
-      res.status(500).send('Erro no servidor.');
+      return res.status(500).send('Erro no servidor.');
     }
   },
 };
