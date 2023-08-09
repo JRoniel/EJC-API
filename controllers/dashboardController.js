@@ -1,16 +1,9 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const app = express();
-
-app.use(cookieParser());
-
-const cookieController = require('../controllers/cookieController');
+const tokenController = require('../controllers/tokenController');
 
 module.exports = {
   showDashboard: (req, res) => {
     try {
-      console.log('SHOWDASHBOAR>> req.cookies.token:', req.cookies.token);
-      const decodedToken = cookieController.decodeCookie(req.cookies.token);
+      const decodedToken = tokenController.decodeToken('token'); // Use o método decodeToken do tokenController
 
       if (decodedToken) {
         const username = decodedToken.username;
