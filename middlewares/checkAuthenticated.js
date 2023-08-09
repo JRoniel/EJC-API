@@ -1,18 +1,11 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-
-const app = express();
-app.use(cookieParser());
+const tokenController = require('../controllers/tokenController');
 
 module.exports = (req, res, next) => {
-    const token = req.cookies.token;
-   
-    if (token) {
-      // Se um token estiver presente, redirecione para /dashboard
-      return res.redirect('/dashboard');
-    }
-  
-    // Se não houver token, continue para a próxima rota ou middleware
-    next();
-  };
-  
+  const token = tokenController.getTokenData();
+
+  if (token) {
+    return res.redirect('/dashboard');
+  }
+
+  next();
+};

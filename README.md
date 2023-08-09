@@ -16,6 +16,16 @@ Aplicação web para gerenciamento escolar pratico.
 
 Todo o projeto depende de módulos considerados 'dependências' para funcionamento correto. Você pode instalar todos os módulos necessários usando o comando `npm init` na pasta raiz do projeto em seu desktop.
 
+Codido para criação do banco de dados e tabela para uso:
+`CREATE DATABASE db_ejc_dev;`
+
+```CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(50) NOT NULL
+);```
+
 ## <span style="color: blue;">Configuração</span>
 
 As configurações necessárias, como banco de dados, tokens, etc., são feitas através do arquivo `.env` na pasta raiz. Configure de acordo com a necessidade.
@@ -33,7 +43,7 @@ O aplicativo utiliza roteamento para direcionar os usuários para as páginas ap
 Esta parte do aplicativo lida com o processo de autenticação do usuário.
 
 - `GET /auth`: Página de login. Se um usuário estiver autenticado, será redirecionado para a página do painel de controle.
-- `GET /auth/logout`: Rota de logout. Remove o cookie de autenticação e redireciona para a página de login.
+- `POST /auth/logout`: Rota de logout. Remove o cookie de autenticação e redireciona para a página de login.
 - `POST /auth/validation`: Rota para validar as credenciais de login.
 
 ### <span style="color: blue;">Rotas do Painel de Controle (`dashboardRouter.js`)</span>
