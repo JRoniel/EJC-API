@@ -7,6 +7,7 @@ module.exports = {
 
       if (decodedToken) {
         const username = decodedToken.username;
+        console.log('username: ', username)
         // Faça o que for necessário para mostrar o painel de controle
         res.render('dashboard', { username });
       } else {

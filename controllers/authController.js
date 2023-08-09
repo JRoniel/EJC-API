@@ -60,6 +60,6 @@ module.exports = {
 
   logout: async (req, res) => {
     tokenController.removeToken();
-    res.redirect('auth/logout');
+    res.redirect('/');
   }
 };
