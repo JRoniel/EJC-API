@@ -41,7 +41,7 @@ function removeToken() {
 }
 
 
-async function decodeToken(key) {
+function decodeToken(key) {
   const item = localStorage.getItem(key);
   if (item) {
     try {
