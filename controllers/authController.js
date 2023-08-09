@@ -1,14 +1,14 @@
 const userModel = require('../models/userModel');
 const tokenController = require('../controllers/tokenController');
 const jwt = require('jsonwebtoken');
-
 const express = require('express');
-
 const app = express();
 
 module.exports = {
   login: async (req, res) => {
     const { username, password } = req.body;
+    console.log('username: ',username);
+    console.log('password: ',password);
 
     try {
       const user = await userModel.getUserByUsername(username);
