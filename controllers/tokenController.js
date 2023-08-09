@@ -13,15 +13,11 @@ function createToken(loggedUser) {
         throw new Error('Usuário não encontrado ou permissão não definida.');
       }
 
-      /*
       const tokenData = {
         id: loggedUser.id,
         username: loggedUser.username,
         role: userRole
       };
-      */
-
-      const tokenData = loggedUser.username;
 
       const token = signToken(tokenData);
       addTokenToStorage(tokenData); // Corrigido: nome da função
@@ -48,10 +44,10 @@ function removeToken() {
 
 async function decodeToken(key) {
   const item = localStorage.getItem(key);
-  /*
+
   if (item) {
     try {
-      const decodedItem = JSON.parse(Buffer.from(item.split('.')[1], 'base64').toString('utf-8'));
+      const decodedItem = JSON.parse(item); 
       return decodedItem;
     } catch (error) {
       console.error('Erro ao decodificar o item:', error);
@@ -59,7 +55,6 @@ async function decodeToken(key) {
   } else {
     console.log(`[LOG-ERROR]> Item '${key}' não encontrado.`);
   }
-  */
 }
 
 
