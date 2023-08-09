@@ -9,6 +9,6 @@ const authController = require('../controllers/authController');
 router.get('/', checkAuthenticated, dashboardController.showDashboard);
 
 // Rota para a validação das credenciais de login (dashboard/validation)
-router.get('/validation', authController.login);
+router.post('/validation', authController.login);
 
 module.exports = router; 
