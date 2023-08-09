@@ -17,7 +17,10 @@ app.use(session({
     saveUninitialized: true
 }));
 
-console.log('senha hash: ',hashPassword.hashPassword('123456'));
+const hashedPassword = hashPassword('123456'); // Hash da senha
+
+console.log('senha hash: ', hashedPassword); // Saída do hash da senha
+
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
