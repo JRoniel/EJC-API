@@ -17,12 +17,14 @@ module.exports = {
         console.log('[LOG-EVENT] Credenciais informadas inválidas ou incorretas');
         return res.redirect('/auth');
       }
+      /*
       const passwordMatch = await userModel.comparePassword(user, password);
 
       if (!passwordMatch) {
         console.log('[LOG-EVENT] Senha incorreta');
         return res.redirect('/auth');
       }
+      */
 
       // Autenticação bem-sucedida
       tokenController.createToken(username); // Passando a resposta (res) para adicionar o token no Local Storage
