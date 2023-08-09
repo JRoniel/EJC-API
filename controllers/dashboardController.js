@@ -3,10 +3,10 @@ const tokenController = require('../controllers/tokenController');
 module.exports = {
   showDashboard: (req, res) => {
     try {
-      const decodedToken = tokenController.decodeToken('token'); // Use o método decodeToken do tokenController
+      const tokenData = tokenController.getTokenData(); // Use o método decodeToken do tokenController
 
-      if (decodedToken) {
-        const username = decodedToken.username;
+      if (tokenData) {
+        const username = tokenData.username;
         // Faça o que for necessário para mostrar o painel de controle
         res.render('dashboard', { LoggedUser: username });
       } else {
