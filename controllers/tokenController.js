@@ -1,43 +1,53 @@
-const LocalStorage = require('node-localstorage').LocalStorage;
-const localStorage = new LocalStorage('./local-storage');
-
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 require('dotenv').config();
 
-function createToken(username) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const userRole = await userModel.getUserRole(username);
-      if (!userRole) {
-        throw new Error('Usuário não encontrado ou permissão não definida.');
-      }
-
-      const tokenData = {
-        username: username,
-        role: userRole
-      };
-
-      const token = signToken(tokenData);
-      addTokenToStorage(token); // Corrigido: nome da função
-      resolve(token);
-    } catch (error) {
-      console.error('[LOG-ERROR] Erro ao criar token:', error);
-      reject(error);
+async function createToken(username) {
+  try {
+    const userRole = await userModel.getUserRole(username);
+    if (!userRole) {
+      throw new Error('Usuário não encontrado ou permissão não definida.');
     }
-  });
+
+    const tokenData = {
+      username: username,
+      role: userRole
+    };
+
+    addToken(signToken(tokenData));
+
+  } catch (error) {
+    console.error('[LOG-ERROR] Erro ao criar token:', error);
+    return null;
+  }
 }
 
 function signToken(tokenData) {
-  return jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '1h' });
+  const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return token;
 }
 
-function addTokenToStorage(value) { 
-  localStorage.setItem('token', value);
+function addToken(value) {
+  const key = 'token';
+  localStorage.setItem(key, value);
 }
 
-function removeToken() {
-  localStorage.removeItem('token');
+function removeToken(key) {
+  localStorage.removeItem(key);
+}
+
+async function decodeToken(key) {
+  const item = localStorage.getItem(key);
+  if (item) {
+    try {
+      const decodedItem = JSON.parse(Buffer.from(item.split('.')[1], 'base64').toString('utf-8'));
+      return decodedItem;
+    } catch (error) {
+      console.error('Erro ao decodificar o item:', error);
+    }
+  } else {
+    console.log(`[LOG-ERROR]> Item '${key}' não encontrado.`);
+  }
 }
 
 function getTokenData() {
@@ -56,7 +66,8 @@ function getTokenData() {
 
 module.exports = {
   createToken,
-  addTokenToStorage, // Corrigido: nome da função
+  addToken,
   removeToken,
+  decodeToken,
   getTokenData
 };
