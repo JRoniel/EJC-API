@@ -17,7 +17,7 @@ module.exports = {
         console.log('[LOG-EVENT] Credenciais informadas inválidas ou incorretas');
         return res.redirect('/auth');
       }
-
+      console.log('senha: ', user.password);
       const passwordMatch = await userModel.comparePassword(user, password);
 
       if (!passwordMatch) {
