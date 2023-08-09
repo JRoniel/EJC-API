@@ -16,6 +16,7 @@ class Database {
     try {
       const connection = await this.pool.getConnection();
       console.log('[LOG-EVENT] Conexão com o banco de dados estabelecida com sucesso');
+
       const [results] = await connection.query('SELECT * FROM users WHERE username = ?', [username]);
       connection.release();
       return results.length === 0 ? null : results[0];

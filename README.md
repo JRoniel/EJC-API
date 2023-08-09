@@ -43,7 +43,7 @@ O aplicativo utiliza roteamento para direcionar os usuários para as páginas ap
 Esta parte do aplicativo lida com o processo de autenticação do usuário.
 
 - `GET /auth`: Página de login. Se um usuário estiver autenticado, será redirecionado para a página do painel de controle.
-- `POST /auth/logout`: Rota de logout. Remove o cookie de autenticação e redireciona para a página de login.
+- `GET /auth/logout`: Rota de logout. Remove o cookie de autenticação e redireciona para a página de login.
 - `POST /auth/validation`: Rota para validar as credenciais de login.
 
 ### <span style="color: blue;">Rotas do Painel de Controle (`dashboardRouter.js`)</span>
