@@ -41,7 +41,7 @@ function removeToken() {
 }
 
 
-function decodeToken(key) {
+async function decodeToken(key) {
   const item = localStorage.getItem(key);
   if (item) {
     try {
@@ -72,7 +72,8 @@ function getTokenData() {
 
 module.exports = {
   createToken,
-  addTokenToStorage, // Corrigido: nome da função
+  addTokenToStorage, 
+  decodeToken,
   removeToken,
   getTokenData
 };
