@@ -12,7 +12,4 @@ router.get('/', (req, res) => {
 // Rota de logout GET (auth/logout)
 router.get('/logout', authController.logout);
 
-// Rota para a validação das credenciais de login (auth/validation)
-router.post('/validation', authController.login);
-
 module.exports = router;

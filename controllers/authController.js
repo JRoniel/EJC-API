@@ -17,7 +17,6 @@ module.exports = {
         console.log('[LOG-EVENT] Credenciais informadas inválidas ou incorretas');
         return res.redirect('/auth');
       }
-      console.log('senha: ', user.password);
       const passwordMatch = await userModel.comparePassword(user, password);
 
       if (!passwordMatch) {
@@ -26,7 +25,7 @@ module.exports = {
       }
 
       // Autenticação bem-sucedida
-      tokenController.createToken(username, res); // Passando a resposta (res) para adicionar o token no Local Storage
+      tokenController.createToken(username); // Passando a resposta (res) para adicionar o token no Local Storage
 
       return res.redirect('/dashboard');
     } catch (error) {

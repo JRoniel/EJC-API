@@ -19,7 +19,7 @@ function createToken(username) {
       };
 
       const token = signToken(tokenData);
-      addToken(token);
+      addTokenToStorage(token); // Corrigido: nome da função
       resolve(token);
     } catch (error) {
       console.error('[LOG-ERROR] Erro ao criar token:', error);
@@ -32,7 +32,7 @@ function signToken(tokenData) {
   return jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '1h' });
 }
 
-function addToken(value) {
+function addTokenToStorage(value) { 
   localStorage.setItem('token', value);
 }
 
@@ -56,7 +56,7 @@ function getTokenData() {
 
 module.exports = {
   createToken,
-  addToken,
+  addTokenToStorage, // Corrigido: nome da função
   removeToken,
   getTokenData
 };
