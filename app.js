@@ -3,7 +3,7 @@ const session = require('express-session');
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const hashPassword = require('../middlewares/hashPassword');
+const { hashPassword } = require('../middlewares/hashPassword'); 
 
 const app = express();
 const port = 3000;
