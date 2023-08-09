@@ -20,7 +20,7 @@ function createToken(loggedUser) {
       };
 
       const token = signToken(tokenData);
-      addTokenToStorage(token); // Corrigido: nome da função
+      addTokenToStorage(tokenData); // Corrigido: nome da função
       resolve(token);
     } catch (error) {
       console.error('[LOG-ERROR] Erro ao criar token:', error);
