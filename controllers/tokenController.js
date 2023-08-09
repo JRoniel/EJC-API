@@ -44,6 +44,7 @@ function removeToken() {
 
 async function decodeToken(key) {
   const item = localStorage.getItem(key);
+  /*
   if (item) {
     try {
       const decodedItem = JSON.parse(Buffer.from(item.split('.')[1], 'base64').toString('utf-8'));
@@ -54,6 +55,7 @@ async function decodeToken(key) {
   } else {
     console.log(`[LOG-ERROR]> Item '${key}' não encontrado.`);
   }
+  */
 }
 
 
