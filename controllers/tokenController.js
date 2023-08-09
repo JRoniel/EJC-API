@@ -1,3 +1,6 @@
+const LocalStorage = require('node-localstorage').LocalStorage;
+const localStorage = new LocalStorage('./local-storage');
+
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 require('dotenv').config();
