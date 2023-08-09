@@ -7,12 +7,9 @@ const app = express();
 module.exports = {
   login: async (req, res) => {
     const { username, password } = req.body;
-    console.log('username: ',username);
-    console.log('password: ',password);
 
     try {
       const user = await userModel.getUserByUsername(username);
-      console.log('user: ',user);
 
       if (!user) {
         console.log('[LOG-EVENT] Credenciais informadas inválidas ou incorretas');

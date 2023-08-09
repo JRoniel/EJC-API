@@ -8,7 +8,7 @@ module.exports = {
       if (decodedToken) {
         const username = decodedToken.username;
         // Faça o que for necessário para mostrar o painel de controle
-        res.render('dashboard', { username });
+        res.render('dashboard', { LoggedUser: username });
       } else {
         console.error('[LOG-ERROR] Não foi possível obter o username do token.');
         // Trate o erro de acordo com o seu fluxo
