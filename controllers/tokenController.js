@@ -13,11 +13,15 @@ function createToken(loggedUser) {
         throw new Error('Usuário não encontrado ou permissão não definida.');
       }
 
+      /*
       const tokenData = {
         id: loggedUser.id,
         username: loggedUser.username,
         role: userRole
       };
+      */
+
+      const tokenData = loggedUser.username;
 
       const token = signToken(tokenData);
       addTokenToStorage(tokenData); // Corrigido: nome da função
