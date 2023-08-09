@@ -1,5 +1,4 @@
 const mysql = require('mysql2/promise');
-const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 class Database {
@@ -22,15 +21,6 @@ class Database {
       return results.length === 0 ? null : results[0];
     } catch (error) {
       console.error('[LOG-EVENT] Erro ao buscar usuário no banco de dados:', error.message);
-      throw error;
-    }
-  }
-
-  async comparePassword(user, password) {
-    try {
-      return await bcrypt.compare(password, user.password);
-    } catch (error) {
-      console.error('[LOG-EVENT] Erro ao comparar senhas:', error.message);
       throw error;
     }
   }
