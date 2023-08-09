@@ -2,12 +2,6 @@ const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
-const express = require('express');
-const cookieParser = require('cookie-parser');
-
-const app = express();
-app.use(cookieParser());
-
 class Database {
   constructor() {
     this.pool = mysql.createPool({
