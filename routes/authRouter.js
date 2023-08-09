@@ -6,12 +6,12 @@ const checkAuthenticated = require('../middlewares/checkAuthenticated');
  
 // Use o middleware para verificar se o usuário já está autenticado antes de acessar /auth
 router.get('/', checkAuthenticated, (req, res) => {
-  res.render('login'); // Ou redirecione para a página de login
+  res.render('/auth'); // Ou redirecione para a página de login
 });
 
 // Rota de login 
 router.get('/', (req, res) => {
-  res.render('login');
+  res.render('auth');
 });
 
 
