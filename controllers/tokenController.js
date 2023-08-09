@@ -8,7 +8,7 @@ require('dotenv').config();
 function createToken(loggedUser) {
   return new Promise(async (resolve, reject) => {
     try {
-      const userRole = await userModel.getUserRole(loggedUser);
+      const userRole = await userModel.getUserRole(loggedUser.username);
       if (!userRole) {
         throw new Error('Usuário não encontrado ou permissão não definida.');
       }
