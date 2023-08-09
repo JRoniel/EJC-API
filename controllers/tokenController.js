@@ -5,16 +5,17 @@ const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 require('dotenv').config();
 
-function createToken(username) {
+function createToken(loggedUser) {
   return new Promise(async (resolve, reject) => {
     try {
-      const userRole = await userModel.getUserRole(username);
+      const userRole = await userModel.getUserRole(loggedUser);
       if (!userRole) {
         throw new Error('Usuário não encontrado ou permissão não definida.');
       }
 
       const tokenData = {
-        username: username,
+        id: loggedUser.id,
+        username: loggedUser.username,
         role: userRole
       };
 

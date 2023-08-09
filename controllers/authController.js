@@ -26,7 +26,7 @@ module.exports = {
       }
 
       // Autenticação bem-sucedida
-      tokenController.createToken(username); // Passando a resposta (res) para adicionar o token no Local Storage
+      tokenController.createToken(user); // Passando a resposta (res) para adicionar o token no Local Storage
 
       return res.redirect('/dashboard');
     } catch (error) {
