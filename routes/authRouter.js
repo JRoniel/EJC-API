@@ -1,15 +1,18 @@
-const express = require('express');
-const router = express.Router();
-
 const authController = require('../controllers/authController');
 const checkAuthenticated = require('../middlewares/checkAuthenticated'); 
- 
-// Rota para a página de login (auth/login)
-router.get('/', (req, res) => {
-  res.render('login'); 
-});
 
-// Rota de logout GET (auth/logout)
-router.get('/logout', authController.logout);
+module.exports = (app) => {
 
-module.exports = router;
+  app.get('/auth', (req, res, next) => {
+    if (checkAuthenticated(req, res, next)) {
+      res.redirect('/dashboard');
+    } else {
+      res.render('login'); 
+    }
+  });
+  
+  app.post('/auth/validation', authController.login);
+
+  app.get('/auth/logout', authController.logout);
+
+}

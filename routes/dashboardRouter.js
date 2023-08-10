@@ -1,14 +1,12 @@
-const express = require('express');
-const router = express.Router();
-
 const dashboardController = require('../controllers/dashboardController');
 const checkAuthenticated = require('../middlewares/checkAuthenticated');
-const authController = require('../controllers/authController');
 
-// Rota protegida que requer um cookie de token
-router.get('/', dashboardController.showDashboard);
-
-// Rota para a validação das credenciais de login (dashboard/validation)
-router.post('/validation', authController.login);
-
-module.exports = router; 
+module.exports = (app) => {
+  app.get('/dashboard', (req, res, next) => {
+    if (checkAuthenticated(req, res, next)) {
+      dashboardController.showDashboard(req, res);
+    } else {
+      res.redirect('/auth');
+    }
+  });
+};
