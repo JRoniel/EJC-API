@@ -16,15 +16,15 @@ Aplicação web para gerenciamento escolar pratico.
 
 Todo o projeto depende de módulos considerados 'dependências' para funcionamento correto. Você pode instalar todos os módulos necessários usando o comando `npm init` na pasta raiz do projeto em seu desktop.
 
-Codido para criação do banco de dados e tabela para uso:
+Codido para criação do banco de dados e tabela para uso: </br>
 `CREATE DATABASE db_ejc_dev;`
 
-```CREATE TABLE users (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  username VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  role VARCHAR(50) NOT NULL
-);```
+`CREATE TABLE users (` </br>
+  `id INT PRIMARY KEY AUTO_INCREMENT,` </br>
+  `username VARCHAR(255) NOT NULL,` </br>
+  `password VARCHAR(255) NOT NULL,` </br>
+  `role VARCHAR(50) NOT NULL` </br>
+`);`
 
 ## Configuração
 
@@ -38,7 +38,7 @@ Os arquivos estáticos devem ser mantidos na pasta `/public` para permitir acess
 
 O aplicativo utiliza roteamento para direcionar os usuários para as páginas apropriadas. Duas partes principais do aplicativo são as rotas de autenticação e as rotas do painel de controle.
 
-### Rotas de Autenticação (`authRouter.js`)
+<h3>Rotas de Autenticação (`authRouter.js`)</h3>
 
 Esta parte do aplicativo lida com o processo de autenticação do usuário.
 
@@ -57,4 +57,4 @@ Esta parte do aplicativo lida com as funcionalidades do painel de controle para 
 - Geovana - Front-end
 
 ## Licença
-- ...
+- MIT License
