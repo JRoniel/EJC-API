@@ -3,11 +3,10 @@ const tokenController = require('../controllers/tokenController');
 module.exports = {
   showDashboard: (req, res) => {
     try {
-      const tokenData = tokenController.getTokenData(); // Use o método decodeToken do tokenController
+      const tokenData = tokenController.getTokenData(); 
 
-      if (tokenData) {
+      if (tokenData != undefined) {
         const username = tokenData.username;
-        // Faça o que for necessário para mostrar o painel de controle
         res.render('dashboard', { LoggedUser: username });
       } else {
         console.error('[LOG-ERROR] Não foi possível obter o username do token.');

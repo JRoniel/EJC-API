@@ -16,7 +16,8 @@ class Database {
       const connection = await this.pool.getConnection();
       console.log('[LOG-EVENT] Conexão com o banco de dados estabelecida com sucesso');
 
-      const [results] = await connection.query('SELECT * FROM users WHERE username = ?', [username]);
+      // Consulta SQL considerando diferenciação entre maiúsculas e minúsculas
+      const [results] = await connection.query('SELECT * FROM users WHERE BINARY username = ?', [username]);
       connection.release();
       return results.length === 0 ? null : results[0];
     } catch (error) {
@@ -28,7 +29,7 @@ class Database {
   async getUserRole(username) {
     try {
       const connection = await this.pool.getConnection();
-      const [results] = await connection.query('SELECT role FROM users WHERE username = ?', [username]);
+      const [results] = await connection.query('SELECT role FROM users WHERE BINARY username = ?', [username]);
       connection.release();
       return results.length === 0 ? null : results[0].role;
     } catch (error) {

@@ -1,8 +1,6 @@
 const userModel = require('../models/userModel');
 const tokenController = require('../controllers/tokenController');
 const jwt = require('jsonwebtoken');
-const express = require('express');
-const app = express();
 
 module.exports = {
   login: async (req, res) => {
