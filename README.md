@@ -20,7 +20,7 @@
 ## Instalação
 - Use o `npm install` no mesmo diretório do package.json para instalar automaticamente todas dependências.
 - Configure o arquivo `.env` com tokens e acessos nescessários.
-- Execute o `db/constructor.sql` no seu banco de dados para criar e configurar o banco de dados nescessário.
+- Execute o `db/construtor.sql` no seu banco de dados para criar e configurar o banco de dados nescessário.
 
 ## Roteamento
 O aplicativo utiliza roteamento para direcionar os usuários para as páginas apropriadas. Duas partes principais do aplicativo são as rotas de autenticação e as rotas do painel de controle.
