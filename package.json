@@ -2,9 +2,13 @@
   "name": "ejc-web-aplication",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "keywords": [],
-  "author": "",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
+  "author": "JRoniel",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
