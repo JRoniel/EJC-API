@@ -2,6 +2,7 @@
 - [x] Autenticação com tokens
 - [x] Banco de dados MongoDB
 - [x] Permissões de acesso
+- [x] tokens verificados por cookie
 - [ ] Dashboard de ações 
 - [ ] Controle de notas
 
@@ -15,9 +16,12 @@
 - Configure o arquivo `.env` com tokens e acessos nescessários.
 
 ## Rotas
-Esta parte do aplicativo lida com o processo de autenticação do usuário.
+(Privadas)
 - `GET /user/:id"`: Login com requisição de email,password
 - `POST /auth/register`: Registro com requisição name,email,password,confirmPassword
+
+(Publicas)
+- `GET /login"`: Login com email,password
 
 ## Auth
 #### Token de valição
