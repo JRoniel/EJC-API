@@ -1,25 +1,24 @@
 {
-  "name": "ejc-web-aplication",
+  "name": "EJC-WEB-APP",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "keywords": [],
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
-  "author": "JRoniel",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.2",
+    "bcrypt": "^5.1.0",
     "consign": "^0.1.6",
-    "dotenv": "^16.3.1",
-    "ejs": "^3.1.9",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "html": "^1.0.0",
-    "jsonwebtoken": "^9.0.1",
-    "mysql2": "^3.6.0",
-    "path": "^0.12.7"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }

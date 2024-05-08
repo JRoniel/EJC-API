@@ -1,60 +1,23 @@
-const userModel = require('../models/userModel');
-const tokenController = require('../controllers/tokenController');
-const jwt = require('jsonwebtoken');
 
-module.exports = {
-  login: async (req, res) => {
-    const { username, password } = req.body;
+const jwt = require("jsonwebtoken");
+
+function checkToken(req, res, next) {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split("")[1];
+
+    if (!token) return res.status(401).json({ msg: "Acesso negado!" });
 
     try {
-      const user = await userModel.getUserByUsername(username);
+        const secret = process.env.SECRET;
 
-      if (!user) {
-        console.log('[LOG-EVENT] Credenciais informadas inválidas ou incorretas');
-        return res.redirect('/auth');
-      }
-
-      // Comparar senhas diretamente
-      if (user.password !== password) {
-        console.log('[LOG-EVENT] Senha incorreta');
-        return res.redirect('/auth');
-      }
-
-      // Autenticação bem-sucedida
-      tokenController.createToken(user); // Passando a resposta (res) para adicionar o token no Local Storage
-
-      return res.redirect('/dashboard');
-    } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      return res.status(500).send('Erro no servidor.');
-    }
-  },
-
-  checkRole: (roleRequired) => {
-    return async (req, res, next) => {
-      const token = tokenController.getTokenData(); // Use o método getTokenData para obter os dados do token do Local Storage
-
-      if (!token) {
-        console.error('[LOG-ERROR] Token não fornecido');
-        return res.redirect('/auth');
-      }
-
-      try {
-        if (token.role !== roleRequired) {
-          console.error('[LOG-ERROR] Acesso não autorizado');
-          return res.redirect('/auth');
-        }
+        jwt.verify(token, secret);
 
         next();
-      } catch (error) {
-        console.error('[LOG-ERROR] Token inválido:', error);
-        return res.redirect('/auth');
-      }
-    };
-  },
+    } catch (err) {
+        res.status(400).json({ msg: "O Token é inválido!" });
+    }
+}
 
-  logout: async (req, res) => {
-    tokenController.removeToken();
-    res.redirect('/');
-  }
-};
+module.exports = {
+    checkToken,
+}
