@@ -6,6 +6,7 @@ module.exports = (app) => {
     app.get('/', AuthController.checkToken, async (req, res) => {
         res.status(200).render("dashboard", { layout: "main" });
     });
+    
     app.get("/login", async (req, res) => {
         res.status(200).render("login", { layout: "main" });
     });
