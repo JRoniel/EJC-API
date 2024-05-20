@@ -10,12 +10,6 @@ const app = express();
 
 // Config JSON response
 app.use(express.json()); 
-app.use(express.urlencoded({ extended: true }));
-// Define engine de view para ejs
-app.set("view engine", "ejs");
-app.set("views", __dirname + "/views");
-
-app.use(cookieParser());
 
 // Conecta ao banco de dados
 mongoose

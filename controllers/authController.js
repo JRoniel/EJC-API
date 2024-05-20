@@ -5,23 +5,6 @@ const mongoose = require("mongoose");
 
 const User = require("../models/User");
 
-async function getUserFromToken(req) {
-    return new Promise((resolve, reject) => {
-        const token = req.cookies['jwt'];
-        if (!token) return resolve(null);
-
-        jwt.verify(token, process.env.SECRET, (err, decoded) => {
-            if (err) return reject(err);
-            const id = decoded.id;
-
-            User.findById(id, "-_id", (err, user) => {
-                if (err) return reject(err);
-                resolve(user);
-            });
-        });
-    });
-}
-
 function updateUser(req, res, next) {
     const { item, value } = req.body;
     const userId = req.params.id;
@@ -41,27 +24,6 @@ function updateUser(req, res, next) {
     });
 
     res.status(200).json(updatedUser);
-}
-
-function checkToken(req, res, next) {
-    const token = req.cookies['jwt'] ? req.cookies['jwt'] : null;
-
-    if (!token) return res.redirect("/login");
-
-    try {
-        const secret = process.env.SECRET;
-
-        jwt.verify(token, secret);  
-
-        next();
-    } catch (err) {
-        clearCookie(req, res);
-        res.redirect("/login");
-    }
-}
-
-async function clearCookie(req, res) {
-    await res.clearCookie('jwt');
 }
 
 async function loginUser(req, res) {
@@ -112,7 +74,7 @@ async function loginUser(req, res) {
 }
 
 async function registerUser(req, res) {
-    const { name, email, password, confirmPassword, level } = req.body;
+    const { name, email, password, level } = req.body;
 
     // Validations
     if (!name) {
@@ -129,12 +91,6 @@ async function registerUser(req, res) {
 
     if (!password) {
         return res.status(422).json({ msg: "A senha é obrigatória!" });
-    }
-
-    if (password !== confirmPassword) {
-        return res.status(422).json({
-            msg: "A senha e a confirmação precisam ser iguais!"
-        });
     }
 
     // Check if user exists
@@ -167,9 +123,8 @@ async function registerUser(req, res) {
 }
 
 module.exports = {
-    checkToken,
     loginUser,
-    registerUser,
     updateUser,
-    getUserFromToken
+    registerUser
 }
+

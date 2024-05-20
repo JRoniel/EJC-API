@@ -1,28 +1,52 @@
 
+const express = require('express');
+const router = express.Router();
 const AuthController = require("../controllers/AuthController");
 
-module.exports = (app) => {
+router.get("/user/:id", AuthController.checkToken, async (req, res) => {
+    try {
+        const user = await AuthController.getUser(req);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+});
 
-    // Rotas privadas
-    // Get User
-    app.get("/user/:id", AuthController.checkToken, async (req, res) => {
-        AuthController.getUser(req, res);
-    });
+router.put("/user/:id", AuthController.checkToken, async (req, res) => {
+    try {
+        const user = await AuthController.updateUser(req);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+});
 
-    // Update User
-    app.put("/user/:id", AuthController.checkToken, async (req, res) => {
-        AuthController.updateUser(req, res);
-    });
+router.post("/auth/register", async (req, res) => {
+    try {
+        const user = await AuthController.registerUser(req);
+        res.status(201).json(user);
+    } catch (error) {
+        res.status(422).json({ msg: error.message });
+    }
+});
 
-    // Rotas publicas
-    // Register
-    app.post("/auth/register", async (req, res) => {
-        AuthController.registerUser(req, res);
-    });
+router.post("/auth/login", async (req, res) => {
+    try {
+        const user = await AuthController.loginUser(req);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(422).json({ msg: error.message });
+    }
+});
 
-    // Login
-    app.post("/auth/login", async (req, res) => {
-        AuthController.loginUser(req, res);
-    });
+router.get("/auth/logout", AuthController.checkToken, async (req, res) => {
+    try {
+        await AuthController.logoutUser(req);
+        res.status(200).json({ msg: "Logout realizado com sucesso!" });
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+});
 
-};
+module.exports = router;
+
