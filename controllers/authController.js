@@ -1,34 +1,11 @@
 
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
 const User = require("../models/User");
 
-function updateUser(req, res, next) {
-    const { item, value } = req.body;
-    const userId = req.params.id;
-
-    const user = User.findById(userId, {
-        _id: true
-    });
-
-    if (!user) {
-        return res.status(404).json({ msg: "Usuário não encontrado!" });
-    }
-
-    const updatedUser = User.findByIdAndUpdate(userId, {
-        [item]: value
-    }, {
-        new: true
-    });
-
-    res.status(200).json(updatedUser);
-}
-
 async function loginUser(req, res) {
-    const { email, password } = req.body;
-
+    const { email, password } = req.body; 
     // Validations
     if (!email) {
         return res.status(422).json({ msg: "O email é obrigatório!" });
@@ -51,29 +28,19 @@ async function loginUser(req, res) {
 
     if (checkPassword === false) {
         return res.status(422).json({ msg: "Senha inválida" });
+        
     }
 
     try {
-        const secret = process.env.SECRET;
 
-        const token = jwt.sign( 
-            {
-                id: user._id.toHexString(),
-                level: user.level
-            },
-            secret,
-            { expiresIn: parseInt(process.env.EXPIRATION_TIME) / 1000 }
-        );
-
-        res.cookie('jwt', token, { httpOnly: true, sameSite: 'strict', secure: process.env.NODE_ENV !== 'test' && true, maxAge: parseInt(process.env.EXPIRATION_TIME) * 1000 });
-        res.redirect(`/dashboard`);
+        return user;
 
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
 }
 
-async function registerUser(req, res) {
+async function registerUser(req, res, returnNew = false) {
     const { name, email, password, level } = req.body;
 
     // Validations
@@ -116,7 +83,8 @@ async function registerUser(req, res) {
     try {
         await user.save();
 
-        res.status(201).json({ msg: "Usuário criado com sucesso!" });
+        return user;
+
     } catch (error) {
         res.status(500).json({ msg: error });
     }
@@ -124,7 +92,6 @@ async function registerUser(req, res) {
 
 module.exports = {
     loginUser,
-    updateUser,
     registerUser
 }
 

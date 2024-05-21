@@ -1,27 +1,40 @@
 
-const express = require('express');
-const router = express.Router();
+
 const AuthController = require("../controllers/AuthController");
+const UserController = require('../controllers/UserController');
 
-router.get("/user/:id", AuthController.checkToken, async (req, res) => {
+module.exports = (app) => {
+
+app.get("/user/:id", async (req, res) => {
     try {
-        const user = await AuthController.getUser(req);
+        const userId = req.params.id;
+        const user = await UserController.getUser(userId);
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
 });
 
-router.put("/user/:id", AuthController.checkToken, async (req, res) => {
+app.get("/user/email/:email", async (req, res) => {
     try {
-        const user = await AuthController.updateUser(req);
+        const email = req.params.email;
+        const user = await UserController.getUserFromEmail(email);
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ msg: error.message });
     }
 });
 
-router.post("/auth/register", async (req, res) => {
+app.put("/user/:id", async (req, res) => {
+    try {
+        const user = await UserController.updateUser(req);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+});
+
+app.post("/auth/register", async (req, res) => {
     try {
         const user = await AuthController.registerUser(req);
         res.status(201).json(user);
@@ -30,7 +43,7 @@ router.post("/auth/register", async (req, res) => {
     }
 });
 
-router.post("/auth/login", async (req, res) => {
+app.post("/auth/login", async (req, res) => {
     try {
         const user = await AuthController.loginUser(req);
         res.status(200).json(user);
@@ -39,14 +52,5 @@ router.post("/auth/login", async (req, res) => {
     }
 });
 
-router.get("/auth/logout", AuthController.checkToken, async (req, res) => {
-    try {
-        await AuthController.logoutUser(req);
-        res.status(200).json({ msg: "Logout realizado com sucesso!" });
-    } catch (error) {
-        res.status(500).json({ msg: error.message });
-    }
-});
-
-module.exports = router;
+}
 
