@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const User = require("../models/User");
 
 /**
- * Atualiza um usu rio
+ * Atualiza um usuario
  * @param {Object} req
  * @param {Object} res
  * @param {Function} next

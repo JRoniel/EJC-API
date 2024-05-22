@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
 const User = require("../models/User");
+const Validator = require("../middlewares/Validator");
+const Language = require("../middlewares/Language");
 
 async function loginUser(req, res) {
     const { email, password } = req.body; 
@@ -19,19 +21,16 @@ async function loginUser(req, res) {
     const user = await User.findOne({ email });
 
     if (!user) {
-        return res.status(404).json({ msg: "Usuário não encontrado!" });
-    }
-
-    // Check if password matches
-
-    const checkPassword = password && user ? bcrypt.compare(password, user.password) : null;
-
-    if (checkPassword === false) {
-        return res.status(422).json({ msg: "Senha inválida" });
-        
+        return res.status(404).json(Langague.getMessage('USER_NOT_FOUND'));
     }
 
     try {
+        // Check if password matches
+        const checkPassword = await bcrypt.compare(password, user.password);
+
+        if (!checkPassword) {
+            return res.status(422).json(Language.getMessage('INVALID_PASSWORD'));
+        }
 
         return user;
 
@@ -63,8 +62,8 @@ async function registerUser(req, res, returnNew = false) {
     // Check if user exists
     const userExists = await User.findOne({ email });
 
-    if (userExists) {
-        return res.status(422).json({ msg: "Por favor, utilize outro email!" });
+    if (userExists || Validator.isValidEmail(email) === false) {
+        return res.status(422).json({ msg: "Por favor, utilize um email valido!" });
     }
 
     // Create password

@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const consign = require("consign");
 
 dotenv.config();
+const Language = require('./middlewares/Language');
 
 const app = express();
 
@@ -24,7 +25,7 @@ consign()
   .into(app);
 
 app.get("/", (req, res) => {
-  res.status(200).json({ msg: "Hello World! EJC API" });
+  res.status(200).json(Language.getMessage('INITIALIZE'));
 })
 
 // Inicializa a aplicacao
