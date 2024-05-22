@@ -1,37 +1,41 @@
+# EJC-Web-Application
 
-- Criando uma API RestFull com Node.js
+Este projeto visa criar uma api para aplicação web para o controle de notas escolar com autenticação e permissões de acesso.
 
 ## Implementações
-- [x] Autenticação com tokens
-- [x] Banco de dados MongoDB
-- [x] Permissões de acesso
-- [x] tokens verificados por cookie
-- [ ] Dashboard de ações 
-- [ ] Controle de notas
 
-## Tabela de Conteúdos 
+- Banco de dados MongoDB
+- Permissões de acesso
+- Dashboard de ações
+- Controle de notas
+
+## Tabela de Conteúdos
+
 - [Instalação](#instalação)
 - [Roteamento](#rotas)
 - [Auth](#auth)
 
 ## Instalação
-- Use o `npm install` no mesmo diretório do package.json para instalar automaticamente todas dependências.
-- Configure o arquivo `.env` com tokens e acessos nescessários.
+
+Para instalar o projeto, execute o comando `npm install` no mesmo diretório do package.json. Além disso, configure o arquivo `.env` com tokens e acessos necessários.
 
 ## Rotas
-(Privadas)
-- `GET /user/:id"`: Login com requisição de email,password
-- `POST /auth/register`: Registro com requisição name,email,password,confirmPassword
 
-(Publicas)
-- `GET /login"`: Login com email,password
+### Privadas
+
+- `GET /user/:id`: Login com requisição de email e password
+- `POST /auth/register`: Registro com requisição name, email, password, confirmPassword
+
+### Públicas
+
+- `GET /login`: Login com email e password
 
 ## Auth
-#### Token de valição
-Apos a validação de dados, é setado um token que expira em um tempo pre-definido no .env, o token conta com o name do usario e seu nivel de segurança de ações.
 
-#### Nivel de segurança
-A aplicação tem niveis de segurança para executar ações.
+### Nível de segurança
+
+A aplicação tem níveis de segurança para executar ações.
+
 - 0 (default/aluno)
 - 1 (professor)
 - 2 (codernador)
