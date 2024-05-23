@@ -10,7 +10,7 @@ const Language = require('../middlewares/Language');
  * @returns {string} - Mensagem de erro, caso haja, ou undefined caso a notificação seja registrada com sucesso
  */
 function registerNotify(target, type, message) {
-    if (!Validator.isValidEmail(target)) {
+    if (!Validator.isValidator('email', target)) {
         return Language.getMessage('INVALID_EMAIL');
     }
 

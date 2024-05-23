@@ -1,23 +1,31 @@
-function isValidEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase()) ? true : false;
+function isValidator(type, value) {
+    if (value == null) {
+        return false;
+    }
+
+    const stringValue = String(value).toLowerCase();
+
+    switch (type) {
+        case 'email':
+            const email = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return email.test(stringValue);
+        
+        case 'password':
+            const password = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+            return password.test(value);
+
+        case 'name':
+            const name = /^[a-zA-Z\s]*$/;
+            return name.test(value);
+
+        case 'notify':
+            const notify = /^[a-zA-Z\s]*$/;
+            return notify.test(value);
+
+        default:
+            return false;
+    }
 }
 
-function isValidPassword(password) {
-    const re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    return re.test(String(password)) ? true : false;
-}
 
-function isValidName(name) {
-    const re = /^[a-zA-Z\s]*$/;
-    return re.test(String(name)) ? true : false;
-}
-
-function isValidNotify(message) {
-    const re = /^[a-zA-Z\s]*$/;
-    return re.test(String(message)) ? true : false;
-}
-
-
-
-module.exports = { isValidEmail, isValidPassword, isValidName, isValidNotify }
+module.exports = { isValidator }

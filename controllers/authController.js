@@ -9,12 +9,12 @@ const Language = require("../middlewares/Language");
 async function loginUser(req, res) {
     const { email, password } = req.body; 
     // Validations
-    if (!email) {
-        return res.status(422).json({ msg: "O email é obrigatório!" });
+    if (!Validator.isValidator('email', email)) {
+        return res.status(422).json({ msg: "Utilize um email valido!" });
     }
 
-    if (!password) {
-        return res.status(422).json({ msg: "A senha é obrigatória!" });
+    if (!Validator.isValidator('password', password)) {
+        return res.status(422).json({ msg: "Utilize uma senha valida!" });
     }
 
     // Check if user exists
@@ -43,26 +43,26 @@ async function registerUser(req, res, returnNew = false) {
     const { name, email, password, level } = req.body;
 
     // Validations
-    if (!name) {
-        return res.status(422).json({ msg: "O nome é obrigatório!" });
+    if (!Validator.isValidator('email', email)) {
+        return res.status(422).json({ msg: "Utilize um email valido!" });
     }
 
-    if (!level) {
-        return res.status(422).json({ msg: "O nivel de segurança é obrigatório!" });
+    if (!Validator.isValidator('password', password)) {
+        return res.status(422).json({ msg: "Utilize uma senha valida!" });
+    }
+    // Validations
+    if (!Validator.isValidator('level', level)) {
+        return res.status(422).json({ msg: "Utilize um nivel de segurança valido!" });
     }
 
-    if (!email) {
-        return res.status(422).json({ msg: "O email é obrigatório!" });
-    }
-
-    if (!password) {
-        return res.status(422).json({ msg: "A senha é obrigatória!" });
+    if (!Validator.isValidator('name', name)) {
+        return res.status(422).json({ msg: "Utilize uma nome valida!" });
     }
 
     // Check if user exists
     const userExists = await User.findOne({ email });
 
-    if (userExists || Validator.isValidEmail(email) === false) {
+    if (userExists || Validator.isValidator('email', email) === false) {
         return res.status(422).json({ msg: "Por favor, utilize um email valido!" });
     }
 
