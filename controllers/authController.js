@@ -10,11 +10,11 @@ async function loginUser(req, res) {
     const { email, password } = req.body; 
     // Validations
     if (!Validator.isValidator('email', email)) {
-        return res.status(422).json({ msg: "Utilize um email valido!" });
+        return res.status(422).json(Langague.getMessage('INVALID_EMAIL'));
     }
 
     if (!Validator.isValidator('password', password)) {
-        return res.status(422).json({ msg: "Utilize uma senha valida!" });
+        return res.status(422).json(Langague.getMessage('INVALID_PASSWORD'));
     }
 
     // Check if user exists
@@ -44,26 +44,26 @@ async function registerUser(req, res, returnNew = false) {
 
     // Validations
     if (!Validator.isValidator('email', email)) {
-        return res.status(422).json({ msg: "Utilize um email valido!" });
+        return res.status(422).json(Langague.getMessage('INVALID_EMAIL'));
     }
 
     if (!Validator.isValidator('password', password)) {
-        return res.status(422).json({ msg: "Utilize uma senha valida!" });
+        return res.status(422).json(Langague.getMessage('INVALID_PASSWORD'));
     }
     // Validations
     if (!Validator.isValidator('level', level)) {
-        return res.status(422).json({ msg: "Utilize um nivel de segurança valido!" });
+        return res.status(422).json(Langague.getMessage('INVALID_LEVEL'));
     }
 
     if (!Validator.isValidator('name', name)) {
-        return res.status(422).json({ msg: "Utilize uma nome valida!" });
+        return res.status(422).json(Langague.getMessage('INVALID_NAME'));
     }
 
     // Check if user exists
     const userExists = await User.findOne({ email });
 
     if (userExists || Validator.isValidator('email', email) === false) {
-        return res.status(422).json({ msg: "Por favor, utilize um email valido!" });
+        return res.status(422).json(Langague.getMessage('INVALID_EMAIL_REGISTER'));
     }
 
     // Create password
