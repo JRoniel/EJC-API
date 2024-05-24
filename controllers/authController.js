@@ -1,96 +1,101 @@
+const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 
-const bcrypt = require("bcrypt");
-const mongoose = require("mongoose");
+const User = require('../models/User');
+const Validator = require('../middlewares/Validator');
+const Language = require('../middlewares/Language');
 
-const User = require("../models/User");
-const Validator = require("../middlewares/Validator");
-const Language = require("../middlewares/Language");
 
+/**
+ * Faz login do usuario
+ * @param {Object} req - Requisicao
+ * @param {Object} res - Resposta
+ * @returns {Promise<Object>} - Retorna o usuario caso o login seja feito com sucesso, caso contrario retorna um erro
+ */
 async function loginUser(req, res) {
-    const { email, password } = req.body; 
-    // Validations
+    const { email, password } = req.body;
+
+    // Valida o email
     if (!Validator.isValidator('email', email)) {
-        return res.status(422).json(Langague.getMessage('INVALID_EMAIL'));
+        return Language.getMessage('INVALID_EMAIL');
     }
 
+    // Valida a senha
     if (!Validator.isValidator('password', password)) {
-        return res.status(422).json(Langague.getMessage('INVALID_PASSWORD'));
+        return Language.getMessage('INVALID_PASSWORD');
     }
 
-    // Check if user exists
+    // Busca o usuario no banco de dados
     const user = await User.findOne({ email });
 
     if (!user) {
-        return res.status(404).json(Langague.getMessage('USER_NOT_FOUND'));
+        return Language.getMessage('USER_NOT_FOUND');
     }
 
-    try {
-        // Check if password matches
-        const checkPassword = await bcrypt.compare(password, user.password);
+    // Verifica se a senha eh valida
+    const comparePassword = await bcrypt.compare(password, user.password);
 
-        if (!checkPassword) {
-            return res.status(422).json(Language.getMessage('INVALID_PASSWORD'));
-        }
-
-        return user;
-
-    } catch (error) {
-        res.status(500).json({ msg: error.message });
+    if (!comparePassword) {
+        return Language.getMessage('INVALID_PASSWORD');
     }
+
+    return user;
 }
 
-async function registerUser(req, res, returnNew = false) {
+/**
+ * Realiza o cadastro de um usuario
+ * @param {Object} req - Requisicao
+ * @param {Object} res - Resposta
+ * @returns {Promise<Object>} - Retorna o usuario cadastrado com sucesso, caso contrario retorna um erro
+ */
+async function registerUser(req, res) {
     const { name, email, password, level } = req.body;
 
-    // Validations
+    // Valida os campos
     if (!Validator.isValidator('email', email)) {
-        return res.status(422).json(Langague.getMessage('INVALID_EMAIL'));
+        return Language.getMessage('INVALID_EMAIL');
     }
 
     if (!Validator.isValidator('password', password)) {
-        return res.status(422).json(Langague.getMessage('INVALID_PASSWORD'));
+        return Language.getMessage('INVALID_PASSWORD');
     }
-    // Validations
+
     if (!Validator.isValidator('level', level)) {
-        return res.status(422).json(Langague.getMessage('INVALID_LEVEL'));
+        return Language.getMessage('INVALID_LEVEL');
     }
 
     if (!Validator.isValidator('name', name)) {
-        return res.status(422).json(Langague.getMessage('INVALID_NAME'));
+        return Language.getMessage('INVALID_NAME');
     }
 
-    // Check if user exists
+    // Verifica se o usuario ja existe
     const userExists = await User.findOne({ email });
 
-    if (userExists || Validator.isValidator('email', email) === false) {
-        return res.status(422).json(Langague.getMessage('INVALID_EMAIL_REGISTER'));
+    if (userExists || !Validator.isValidator('email', email)) {
+        return Language.getMessage('INVALID_EMAIL_REGISTER');
     }
 
-    // Create password
-    const salt = await bcrypt.genSalt(10);
-    const passwordHash = await bcrypt.hash(password, salt);
-    
-    // Create user
+    // Cria o usuario
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
         level,
         name,
         email,
-        password: passwordHash
+        password: await bcrypt.hash(password, 10),
     });
 
     try {
-        await user.save();
+        // Salva o usuario
+        const savedUser = await user.save();
 
-        return user;
-
+        return savedUser;
     } catch (error) {
-        res.status(500).json({ msg: error });
+        return error.message;
     }
 }
 
 module.exports = {
     loginUser,
-    registerUser
-}
+    registerUser,
+};
 

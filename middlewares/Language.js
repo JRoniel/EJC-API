@@ -1,8 +1,10 @@
-class Language {
-
-    constructor() {
-        this.messages = {
-            'pt-BR': {
+    /**
+     * Retorna a mensagem correspondente ao tipo e ao idioma
+     * @param {string} message - Tipo da mensagem
+     * @returns {string} - Mensagem
+     */
+    function getMessage(message) {
+        const messagesList = {
                 // MENSAGENS GERAIS
                 NO_ROUTE_ESTABELECED: 'Nenhuma rota estabelecida',
                 INITIALIZE : 'Sistema iniciado com sucesso!',
@@ -18,15 +20,12 @@ class Language {
                 INVALID_PASSWORD: 'Senha inválida, 8 caracteres, letras e números',
                 INVALID_NAME: 'Nome inválido, somente letras são permitidas',
                 INVALID_EMAIL: 'Email inválido, tente novamente email',
-
-            }
         };
-        this.language = 'pt-BR';
+
+        return messagesList[message] || 'Mensagem nao encontrada';
     }
 
-    getMessage(message) {
-        return this.messages[this.language][message];
-    }
+
+module.exports = {
+    getMessage
 }
-
-module.exports = new Language();
