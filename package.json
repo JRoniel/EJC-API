@@ -1,26 +1,25 @@
 {
-  "name": "EJC-WEB-APP",
+  "name": "EJC-API",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "nodemon app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "John Roniel",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "consign": "^0.1.6",
-    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
-    "ejs": "^3.1.10",
     "express": "^4.18.2",
-    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.1"
   },
   "devDependencies": {
+    "chai": "^5.1.1",
+    "mocha": "^10.4.0",
     "nodemon": "^2.0.20"
   }
 }
