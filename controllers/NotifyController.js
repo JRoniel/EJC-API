@@ -7,13 +7,6 @@ const mongoose = require('mongoose');
 /**
  * Registra uma notificação
  * @param {string} target - Email do destinatário da notificação
- * @param {string} type - Tipo da notificação
- * @param {string} message - Mensagem da notificação
- * @returns {string} - Mensagem de erro, caso haja, ou undefined caso a notificação seja registrada com sucesso
-/**
- * Registra uma notificação
- * @param {string} target - Email do destinatário da notificação
- * @param {string} type - Tipo da notificação
  * @param {string} message - Mensagem da notificação
  * @returns {Promise<string | undefined>} - Mensagem de erro, caso haja, ou undefined caso a notificação seja registrada com sucesso
  */
@@ -34,7 +27,7 @@ async function registerNotify(target, message) {
         return undefined;
     } catch (error) {
         console.log(error);
-        return Language.getMessage('INTERNAL_ERROR');
+        return Language.getMessage('INTERNAL_ERROR' + error);
     }
 }
 
@@ -50,6 +43,12 @@ async function getNotify(email) {
     })
 }
 
+/**
+ * Registra uma notificação para todos os usuários de um determinado nivel
+ * @param {number} level - nivel dos destinatários da notificação
+ * @param {string} message - Mensagem da notificação
+ * @returns {Promise<string | undefined>} - Mensagem de erro, caso haja, ou undefined caso a notificação seja registrada com sucesso
+ */
 async function registerNotifyLevel(level, message){
     
     if (!Validator.isValidator('level', level)) {
@@ -68,10 +67,15 @@ async function registerNotifyLevel(level, message){
         return undefined;
     } catch (error) {
         console.log(error);
-        return Language.getMessage('INTERNAL_ERROR');
+        return Language.getMessage('INTERNAL_ERROR' + error);
     }
 }
 
+/**
+ * Retorna todas as notificações de um nivel
+ * @param {number} level - level do usuário
+ * @returns {Promise<Array<Notify>>} - Array de notificações do usuário
+ */
 function getNotifyLevel(level) {
     return Notify.find({ level }, {
         _id: false,
@@ -85,3 +89,4 @@ module.exports = {
     getNotifyLevel,
     registerNotifyLevel
 }
+

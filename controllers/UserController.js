@@ -2,6 +2,7 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
 
+
 /**
  * Atualiza um usuario
  * @param {Object} req
@@ -18,7 +19,7 @@ function updateUser(req, res, next) {
     }, {
         new: true
     })
-        .then(user => res.status(200).json(user))
+        .then(user => {return user})
         .catch(next);
 }
 

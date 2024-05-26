@@ -5,7 +5,6 @@ const User = require('../models/User');
 const Validator = require('../middlewares/Validator');
 const Language = require('../middlewares/Language');
 
-
 /**
  * Faz login do usuario
  * @param {Object} req - Requisicao
@@ -46,7 +45,7 @@ async function loginUser(req, res) {
  * Realiza o cadastro de um usuario
  * @param {Object} req - Requisicao
  * @param {Object} res - Resposta
- * @returns {Promise<Object>} - Retorna o usuario cadastrado com sucesso, caso contrario retorna um erro
+ * @returns {Promise<Object>} - Retorna mensagem de cadastrado com sucesso, caso contrario retorna um erro
  */
 async function registerUser(req, res) {
     const { name, email, password, level } = req.body;
@@ -81,16 +80,16 @@ async function registerUser(req, res) {
         level,
         name,
         email,
-        password: await bcrypt.hash(password, 10),
+        password: await bcrypt.hash(password, 10)
     });
 
     try {
         // Salva o usuario
         const savedUser = await user.save();
-
-        return savedUser;
+ 
+        return language.getMessage('REGISTER_SUCESS');
     } catch (error) {
-        return error.message;
+        return language.getMessage('INTERNAL_ERROR' + error);
     }
 }
 
@@ -98,4 +97,3 @@ module.exports = {
     loginUser,
     registerUser,
 };
-
