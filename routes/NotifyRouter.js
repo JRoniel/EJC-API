@@ -1,24 +1,25 @@
 const NotifyController = require('../controllers/NotifyController');
 const Validator = require('../middlewares/Validator');
+const Language = require('../middlewares/Language');
 
 module.exports = (app) => {
 
     app.post("/notify/", async (req, res) => {
-        const { email, type, message } = req.body;
+        const { email, message } = req.body;
 
         if(!Validator.isValidator('email', email)) {
-            return res.status(422).json({ msg: 'Email inválido!' });
+            return res.status(422).json(Language.getMessage('INVALID_EMAIL'));
         }
 
         if(!Validator.isValidator('message', message)) {
-            return res.status(422).json({ msg: 'Mensagem inválida!' });
+            return res.status(422).json(Language.getMessage('INVALID_MESSAGE'));
         }
 
         try {
-            const notify = await NotifyController.registerNotify(email, type, message);
-            return res.status(200).json({ msg: 'Notificação registrada com sucesso!' });
+            const notify = await NotifyController.registerNotify(email, message);
+            return res.status(200).json(Language.getMessage('MESSAGE_SUCESS'));
         } catch (error) {
-            res.status(422).json({ msg: error.message });
+            res.status(422).json(Language.getMessage('INTERNAL_ERROR' + error));
         }
     })
 
@@ -26,17 +27,17 @@ module.exports = (app) => {
         const { email } = req.body;
         
         if(!Validator.isValidator('email', email)) {
-            return res.status(422).json({ msg: 'Email inválido!' });
+            return res.status(422).json(Language.getMessage('INVALID_EMAIL'));
         }
 
         try {
          const notifies = await NotifyController.getNotify(email);
             if (!notifies) {
-                return res.status(204).json({ msg: 'Nenhuma notificação encontrada.' });
+                return res.status(204).json(Language.getMessage('NO_DATA'));
             }
             return res.status(200).json(notifies);
         } catch (error) {
-            res.status(500).send(error.message);
+            res.status(500).send(Language.getMessage('INTERNAL_ERROR' + error));
         }
     })
 
@@ -45,17 +46,17 @@ module.exports = (app) => {
      
         const { level } = req.body;
         if(!Validator.isValidator('level', level)) {
-            return res.status(422).json({ msg: 'Level inválido!' });
+            return res.status(422).json(Language.getMessage('INVALID_LEVEL'));
         }
 
         try {
          const notifies = await NotifyController.getNotifyLevel(level);
             if (!notifies) {
-                return res.status(204).json({ msg: 'Nenhuma notificação encontrada.' });
+                return res.status(204).json(Language.getMessage('NO_DATA'));
             }
             return res.status(200).json(notifies);
         } catch (error) {
-            res.status(500).send(error.message);
+            res.status(500).send(Language.getMessage('INTERNAL_ERROR' + error));
         }
     });
 
@@ -63,18 +64,18 @@ module.exports = (app) => {
         const { level, message } = req.body;
 
         if(!Validator.isValidator('level', level)) {
-            return res.status(422).json({ msg: 'Level inválido!' });
+            return res.status(422).json(Language.getMessage('INVALID_LEVEL'));
         }
 
         if(!Validator.isValidator('message', message)) {
-            return res.status(422).json({ msg: 'Mensagem inválida!' });
+            return res.status(422).json(Language.getMessage('INVALID_MESSAGE'));
         }
 
         try {
             const notify = await NotifyController.registerNotifyLevel(level, message);
-            return res.status(200).json({ msg: 'Notificação registrada com sucesso!' });
+            return res.status(200).json(Language.getMessage('MESSAGE_SUCESS'));
         } catch (error) {
-            res.status(422).json({ msg: error.message });
+            res.status(422).json(Language.getMessage('INTERNAL_ERROR' + error));
         }
     })
     
