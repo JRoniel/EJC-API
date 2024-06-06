@@ -2,11 +2,20 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const consign = require("consign");
+const bodyParser = require('body-parser');
 
 dotenv.config();
 const Language = require('./middlewares/Language');
 
 const app = express();
+
+// Configura o CORS para permitir acesso de qualquer origem
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 // Config JSON response
 app.use(express.json());

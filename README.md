@@ -5,7 +5,7 @@ Este projeto visa criar uma api para aplicação web para o controle de notas es
 ## Implementações
 
 - Banco de dados MongoDB
-- Permissões de acesso
+- Permissões de acesso com login
 - Sistema de notificações para aluno e professores
 - Sistema de linguagem, padrão: PT-BR
 

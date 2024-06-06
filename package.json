@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "John Roniel",
-  "license": "ISC",
+  "license": "ISC", 
   "dependencies": {
     "bcrypt": "^5.1.0",
     "consign": "^0.1.6",

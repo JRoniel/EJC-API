@@ -4,6 +4,12 @@ const Language = require('../middlewares/Language');
 
 module.exports = (app) => {
 
+    /**
+     * Cadastra uma notificacao
+     * @param {Object} req - Requisicao
+     * @param {Object} res - Resposta
+     * @returns {Promise<Object>} - Retorna o usuario caso o cadastro seja feito com sucesso, caso contrario retorna um erro
+     */
     app.post("/notify/", async (req, res) => {
         const { email, message } = req.body;
 
@@ -23,8 +29,15 @@ module.exports = (app) => {
         }
     })
 
-    app.get("/notify/", async (req, res) => {
-        const { email } = req.body;
+    /*
+    * Retorna todas as notificações de um usuário
+    * @param {Object} req - Requisicao
+    * @param {Object} res - Resposta
+    * @returns {Promise<Object>} - Retorna o usuario caso o cadastro seja feito com sucesso, caso contrario retorna um erro
+    */
+    app.get("/notify", async (req, res) => {
+
+        const { email } = req.query;
         
         if(!Validator.isValidator('email', email)) {
             return res.status(422).json(Language.getMessage('INVALID_EMAIL'));
@@ -41,7 +54,12 @@ module.exports = (app) => {
         }
     })
 
-    
+    /*
+    * Retorna todas as notificações de um level
+    * @param {Object} req - Requisicao
+    * @param {Object} res - Resposta
+    * @returns {Promise<Object>} - Retorna o usuario caso o cadastro seja feito com sucesso, caso contrario retorna um erro
+    */    
     app.get("/notify/level/", async (req, res) => {
      
         const { level } = req.body;
@@ -60,6 +78,12 @@ module.exports = (app) => {
         }
     });
 
+    /**
+     * Cadastra uma notificacao
+     * @param {Object} req - Requisicao
+     * @param {Object} res - Resposta
+     * @returns {Promise<Object>} - Retorna o usuario caso o cadastro seja feito com sucesso, caso contrario retorna um erro
+     */
     app.post("/notify/level", async (req, res) => {
         const { level, message } = req.body;
 
@@ -80,5 +104,3 @@ module.exports = (app) => {
     })
     
 }
-
-

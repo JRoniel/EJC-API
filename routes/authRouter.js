@@ -3,6 +3,12 @@ const UserController = require('../controllers/UserController');
 
 module.exports = (app) => {
 
+/*
+* Cria um novo usuario 
+* @param {Object} req - Requisicao
+* @param {Object} res - Resposta
+* @returns {Promise<Object>} - Retorna o usuario caso o cadastro seja feito com sucesso, caso contrario retorna um erro
+*/    
 app.get("/user/:id", async (req, res) => {
     try {
         const userId = req.params.id;
@@ -13,6 +19,12 @@ app.get("/user/:id", async (req, res) => {
     }
 });
 
+/*
+* Busca um usuario por email
+* @param {Object} req - Requisicao
+* @param {Object} res - Resposta
+* @returns {Promise<Object>} - Retorna o usuario caso o email seja encontrado, caso contrario retorna um erro
+*/
 app.get("/user/:email", async (req, res) => {
     try {
         const email = req.params.email;
@@ -23,6 +35,12 @@ app.get("/user/:email", async (req, res) => {
     }
 });
 
+/*
+* Atualiza os dados do usuario
+* @param {Object} req - Requisicao
+* @param {Object} res - Resposta
+* @returns {Promise<Object>} - Retorna o usuario caso o cadastro seja feito com sucesso, caso contrario retorna um erro
+*/
 app.put("/user/:id", async (req, res) => {
     try {
         const i = await UserController.updateUser(req);
@@ -32,6 +50,12 @@ app.put("/user/:id", async (req, res) => {
     }
 });
 
+/*
+* Cadastra um novo usuario
+* @param {Object} req - Requisicao
+* @param {Object} res - Resposta
+* @returns {Promise<Object>} - Retorna o usuario caso o cadastro seja feito com sucesso, caso contrario retorna um erro
+*/
 app.post("/auth/register", async (req, res) => {
     try {
         const i = await AuthController.registerUser(req);
@@ -41,6 +65,12 @@ app.post("/auth/register", async (req, res) => {
     }
 });
 
+/*
+* Faz login do usuario
+* @param {Object} req - Requisicao
+* @param {Object} res - Resposta
+* @returns {Promise<Object>} - Retorna o usuario caso o login seja feito com sucesso, caso contrario retorna um erro
+*/
 app.post("/auth/login", async (req, res) => {
     try {
         const i = await AuthController.loginUser(req);
