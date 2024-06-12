@@ -1,5 +1,6 @@
 const AuthController = require("../controllers/AuthController");
 const UserController = require('../controllers/UserController');
+const Language = require('../middlewares/Language');
 
 module.exports = (app) => {
 
@@ -15,7 +16,7 @@ app.get("/user/:id", async (req, res) => {
         const i = await UserController.getUser(userId);
         res.status(200).json(i);
     } catch (error) {
-        res.status(500).json(Language.getMessage('INTERNAL_ERROR' + error));
+        res.status(500).json(Language.getMessage('INTERNAL_ERROR') + error);
     }
 });
 
@@ -31,7 +32,7 @@ app.get("/user/:email", async (req, res) => {
         const i = await UserController.getUserFromEmail(email);
         res.status(200).json(i);
     } catch (error) {
-        res.status(500).json(Language.getMessage('INTERNAL_ERROR' + error));
+        res.status(500).json(Language.getMessage('INTERNAL_ERROR') + error);
     }
 });
 
@@ -46,7 +47,7 @@ app.put("/user/:id", async (req, res) => {
         const i = await UserController.updateUser(req);
         res.status(200).json(i);
     } catch (error) {
-        res.status(500).json(Language.getMessage('INTERNAL_ERROR' + error));
+        res.status(500).json(Language.getMessage('INTERNAL_ERROR') + error);
     }
 });
 
@@ -61,7 +62,7 @@ app.post("/auth/register", async (req, res) => {
         const i = await AuthController.registerUser(req);
         res.status(201).json(i);
     } catch (error) {
-        res.status(422).json(Language.getMessage('INTERNAL_ERROR' + error));
+        res.status(422).json(Language.getMessage('INTERNAL_ERROR') + error);
     }
 });
 
@@ -76,7 +77,7 @@ app.post("/auth/login", async (req, res) => {
         const i = await AuthController.loginUser(req);
         res.status(200).json(i);
     } catch (error) {
-        res.status(422).json(Language.getMessage('INTERNAL_ERROR' + error));
+        res.status(422).json(Language.getMessage('INTERNAL_ERROR') + error);
     }
 });
 

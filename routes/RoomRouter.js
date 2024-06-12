@@ -1,4 +1,4 @@
-const Validator = require('../middlewares/Validator');
+
 const Language = require('../middlewares/Language');
 const RoomController = require('../controllers/roomController');
 const Room = require('../models/Room');
@@ -19,15 +19,11 @@ module.exports = (app) => {
     });
 
 /* Cria uma nova sala */
-    app.post('/room', async (req, res) => {
+    app.post('/room/create', async (req, res) => {
         try {
-            const { number } = req.body;
+            const { number, name_room } = req.body;
 
-            if (!Validator.isValidator('number', number)) {
-                return res.status(400).json(Language.getMessage('INVALID_NUMBER'));
-            }
-
-            const room = await RoomController.registerRoom(number);
+            const room = await RoomController.registerRoom(number, name_room);
             if (!room) {
                 return res.status(204).json(Language.getMessage('NO_DATA'));
             }
@@ -42,10 +38,6 @@ module.exports = (app) => {
     app.post('/room/add', async (req, res) => {
         try {
             const { number, user } = req.body;
-
-            if (!Validator.isValidator('number', number)) {
-                return res.status(400).json(Language.getMessage('INVALID_NUMBER'));
-            }
 
             const room = await RoomController.addToRoom(number, user);
             if (!room) {
@@ -62,9 +54,6 @@ module.exports = (app) => {
     app.delete('/room/remove', async (req, res) => {
         try {
             const { number, user } = req.body;
-            if (!Validator.isValidator('number', number)) {
-                return res.status(400).json(Language.getMessage('INVALID_NUMBER'));
-            }
 
             const room = await RoomController.removeFromRoom(number, user);
             if (!room) {    
@@ -78,12 +67,10 @@ module.exports = (app) => {
     });
 
     /* Deleta uma sala */
-    app.delete('/room', async (req, res) => {
+    app.delete('/room/delete', async (req, res) => {
         try {
             const { number } = req.body;
-            if (!Validator.isValidator('number', number)) {
-                return res.status(400).json(Language.getMessage('INVALID_NUMBER'));
-            }
+            
             const room = await RoomController.deleteRoom(number);
             if (!room) {
                 return res.status(204).json(Language.getMessage('NO_DATA'));
@@ -95,4 +82,13 @@ module.exports = (app) => {
         }
     });    
 
+    app.get('/room/users', async (req, res) => {
+        try {
+            const { number } = req.body;
+            const users = await RoomController.getUsersInRoom(number);
+            return res.status(200).json(users);
+        } catch (error) {
+            res.status(500).send(Language.getMessage('INTERNAL_ERROR') + error);
+        }
+    });
 };

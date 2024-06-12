@@ -9,6 +9,7 @@
                 INITIALIZE : 'Sistema iniciado com sucesso!',  
                 MESSAGE_SUCESS: 'Mensagem enviada com sucesso',
                 REGISTER_SUCESS: 'Registro efetuado com sucesso',
+                ACTION_SUCESS: 'Acção efetuada com sucesso',
 
                 // PERMISSÃO NÃO AUTORIZADA
                 PERMISSION_DENIED: 'Permissão não autorizada',
@@ -25,7 +26,6 @@
                 NO_ROUTE_ESTABELECED: 'Nenhuma rota estabelecida',
                 INTERNAL_ERROR: 'Erro interno, memsagem: ',
                 INVALID_LEVEL: 'Nível de segurança não é valido',
-                INVALID_NUMBER: 'Número inválido',
                 INVALID_MESSAGE: 'Mensagem inválida',
                 ROOM_EXISTS: 'Sala ja existe',
 
@@ -35,7 +35,7 @@
 
         };
 
-        return messagesList[message] || 'Mensagem: ' + message + ' nao encontrada';
+        return messagesList[message] || 'Mensagem: ' + message + ' não encontrada';
     }
 
 

@@ -16,8 +16,7 @@
         password: /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}$/, //Deve conter pelo menos uma letra e um número
         name: /^[a-zA-Z\s]+$/, //Deve conter apenas letras
         message: /^[\w\s\u00C0-\u017F]+$/, //Deve conter apenas letras
-        level: /^[0-3]*$/, //Deve conter apenas 0, 1, 2 ou 3
-        number: /^[0-9]*$/
+        level: /^[0-3]*$/ //Deve conter apenas 0, 1, 2 ou 3
     };
 
     return validators[type] !== undefined && validators[type].test(normalizedValue);
