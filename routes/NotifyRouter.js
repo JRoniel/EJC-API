@@ -1,4 +1,4 @@
-const NotifyController = require('../controllers/NotifyController');
+const NotifyController = require('../controllers/notifyController');
 const Validator = require('../middlewares/Validator');
 const Language = require('../middlewares/Language');
 

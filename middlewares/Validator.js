@@ -4,7 +4,7 @@
  * @param {*} value - Valor a ser verificado
  * @returns {boolean} - Verdadeiro se o valor atende a regra, falso caso contrario
  */
-function isValidator(type, value) {
+ function isValidator(type, value) {
     // Se o valor for nulo, retorna falso
     if (value == null) {
         return false;
@@ -17,6 +17,7 @@ function isValidator(type, value) {
         name: /^[a-zA-Z\s]+$/, //Deve conter apenas letras
         message: /^[\w\s\u00C0-\u017F]+$/, //Deve conter apenas letras
         level: /^[0-3]*$/, //Deve conter apenas 0, 1, 2 ou 3
+        number: /^[0-9]*$/
     };
 
     return validators[type] !== undefined && validators[type].test(normalizedValue);

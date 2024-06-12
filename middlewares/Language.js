@@ -3,7 +3,7 @@
      * @param {string} message - Tipo da mensagem
      * @returns {string} - Mensagem
      */
-    function getMessage(message) {
+     function getMessage(message) {
         const messagesList = {
                 // SUCESSO
                 INITIALIZE : 'Sistema iniciado com sucesso!',  
@@ -23,9 +23,11 @@
                 INVALID_NAME: 'Nome inválido, somente letras são permitidas',
                 INVALID_EMAIL: 'Email inválido, tente novamente email',
                 NO_ROUTE_ESTABELECED: 'Nenhuma rota estabelecida',
-                INTERNAL_ERROR: 'Erro interno, memsagem:',
+                INTERNAL_ERROR: 'Erro interno, memsagem: ',
                 INVALID_LEVEL: 'Nível de segurança não é valido',
+                INVALID_NUMBER: 'Número inválido',
                 INVALID_MESSAGE: 'Mensagem inválida',
+                ROOM_EXISTS: 'Sala ja existe',
 
                 // NÃO ENCONTRADO
                 NO_DATA: 'Nenhuma dado encontrado',
@@ -33,7 +35,7 @@
 
         };
 
-        return messagesList[message] || 'Mensagem nao encontrada';
+        return messagesList[message] || 'Mensagem: ' + message + ' nao encontrada';
     }
 
 
