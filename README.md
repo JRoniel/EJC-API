@@ -8,14 +8,13 @@ Este projeto visa criar uma api para aplicação web para o controle de notas es
 - Permissões de acesso com login
 - Sistema de notificações para aluno e professores
 - Sistema de linguagem, padrão: PT-BR
+- Sistema de mapa salas
 
 ## Implementações futuras
-- Sistema de mapa salas
 - Sistema de notas e boletim escolar
 - Sistema de chamada com faltas para professores
 - Sistema de faturas para diretoria
 - Sistema de disponibilização de conteudo de aula para alunos
-
 
 ## Tabela de Conteúdos
 
@@ -32,8 +31,16 @@ Para instalar o projeto, execute o comando `npm install` no mesmo diretório do 
 - `GET /user/:id`: Retorna dados de usuario especifico ID
 - `POST /auth/login`: Login de usuario
 - `POST /auth/register`: Registro de usuario
+
 - `POST /notify/`: Notificar usuario por email
 - `POST /notify/level/`: Notificar usuarios de nivel especifico.
+
+- GET `/room/:` Retorna todas as salas
+- GET `/room/users/`: Retorna todos os usuarios numa sala
+- POST `/room/create:` Cria uma sala
+- POST `/room/add:` Adiciona usuarios a sala
+- POST `/room/remove:` Remove um usuario da sala
+- REMOVE `/room/remove:` Exclue uma sala 
 
 ## Auth
 
