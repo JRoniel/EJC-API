@@ -9,64 +9,46 @@ const Language = require('../middlewares/Language');
  * Faz login do usuario
  * @param {Object} req
  * @param {Object} res
- * @returns {Promise<Object>}
+ * @returns {Promise<String>}
  */
 async function loginUser(req, res) {
   const { email, password } = req.body;
 
-  if (!Validator.isValidator('email', email)) {
-    return res.status(400).json(Language.getMessage('INVALID_EMAIL'));
-  }
+  if (!Validator.isValidator('email', email)) return Language.getMessage('INVALID_EMAIL');
 
-  if (!Validator.isValidator('password', password)) {
-    return res.status(400).json(Language.getMessage('INVALID_PASSWORD'));
-  }
+  if (!Validator.isValidator('password', password)) return Language.getMessage('INVALID_PASSWORD');
 
   const user = await User.findOne({ email });
 
-  if (!user) {
-    return res.status(404).json(Language.getMessage('USER_NOT_FOUND'));
-  }
+  if (!user) return Language.getMessage('USER_NOT_FOUND');
 
   const comparePassword = await bcrypt.compare(password, user.password);
 
-  if (!comparePassword) {
-    return res.status(400).json(Language.getMessage('INVALID_PASSWORD'));
-  }
+  if (!comparePassword) return Language.getMessage('INVALID_PASSWORD');
 
-  return res.status(200).json(user);
+  return user;
 }
 
 /**
  * Realiza o cadastro de um usuario
  * @param {Object} req
  * @param {Object} res
- * @returns {Promise<Object>}
+ * @returns {Promise<String>}
  */
 async function registerUser(req, res) {
   const { name, email, password, level } = req.body;
 
-  if (!Validator.isValidator('email', email)) {
-    return res.status(400).json(Language.getMessage('INVALID_EMAIL'));
-  }
+  if (!Validator.isValidator('email', email)) return Language.getMessage('INVALID_EMAIL');
 
-  if (!Validator.isValidator('password', password)) {
-    return res.status(400).json(Language.getMessage('INVALID_PASSWORD'));
-  }
+  if (!Validator.isValidator('password', password)) return Language.getMessage('INVALID_PASSWORD');
 
-  if (!Validator.isValidator('level', level)) {
-    return res.status(400).json(Language.getMessage('INVALID_LEVEL'));
-  }
+  if (!Validator.isValidator('level', level)) return Language.getMessage('INVALID_LEVEL');
 
-  if (!Validator.isValidator('name', name)) {
-    return res.status(400).json(Language.getMessage('INVALID_NAME'));
-  }
+  if (!Validator.isValidator('name', name)) return Language.getMessage('INVALID_NAME');
 
   const userExists = await User.findOne({ email });
 
-  if (userExists) {
-    return res.status(400).json(Language.getMessage('INVALID_EMAIL_REGISTER'));
-  }
+  if (userExists) return Language.getMessage('INVALID_EMAIL_REGISTER');
 
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
@@ -77,11 +59,11 @@ async function registerUser(req, res) {
   });
 
   try {
-    const savedUser = await user.save();
+    await user.save();
 
-    return res.status(201).json(Language.getMessage('REGISTER_SUCESS'));
+    return Language.getMessage('REGISTER_SUCESS');
   } catch (error) {
-    return res.status(500).json(Language.getMessage('INTERNAL_ERROR') + error);
+    return Language.getMessage('INTERNAL_ERROR') + error;
   }
 }
 
