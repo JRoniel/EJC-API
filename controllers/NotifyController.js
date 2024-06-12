@@ -1,7 +1,6 @@
-const Notify = require('../models/Notify')
+const Notify = require('../models/Notify');
 const Validator = require('../middlewares/Validator');
 const Language = require('../middlewares/Language');
-
 const mongoose = require('mongoose');
 
 /**
@@ -17,17 +16,14 @@ async function registerNotify(target, message) {
 
     try {
         const notify = new Notify({
-            _id: mongoose.Types.ObjectId(),
             target,
-            message
+            message,
         });
 
         await notify.save();
-
-        return undefined;
     } catch (error) {
         console.log(error);
-        return Language.getMessage('INTERNAL_ERROR' + error);
+        return Language.getMessage('INTERNAL_ERROR') + error;
     }
 }
 
@@ -37,10 +33,7 @@ async function registerNotify(target, message) {
  * @returns {Promise<Array<Notify>>} - Array de notificações do usuário
  */
 async function getNotify(email) {
-    return Notify.find({ target: email }, {
-        _id: false,
-        message: true
-    })
+    return Notify.find({ target: email }, { message: true });
 }
 
 /**
@@ -49,25 +42,21 @@ async function getNotify(email) {
  * @param {string} message - Mensagem da notificação
  * @returns {Promise<string | undefined>} - Mensagem de erro, caso haja, ou undefined caso a notificação seja registrada com sucesso
  */
-async function registerNotifyLevel(level, message){
-    
+async function registerNotifyLevel(level, message) {
     if (!Validator.isValidator('level', level)) {
         return Language.getMessage('INVALID_LEVEL');
     }
 
     try {
         const notify = new Notify({
-            _id: mongoose.Types.ObjectId(),
             level,
-            message
+            message,
         });
 
         await notify.save();
-
-        return undefined;
     } catch (error) {
         console.log(error);
-        return Language.getMessage('INTERNAL_ERROR' + error);
+        return Language.getMessage('INTERNAL_ERROR') + error;
     }
 }
 
@@ -77,16 +66,13 @@ async function registerNotifyLevel(level, message){
  * @returns {Promise<Array<Notify>>} - Array de notificações do usuário
  */
 function getNotifyLevel(level) {
-    return Notify.find({ level }, {
-        _id: false,
-        message: true
-    });
+    return Notify.find({ level }, { message: true });
 }
 
 module.exports = {
     registerNotify,
     getNotify,
     getNotifyLevel,
-    registerNotifyLevel
-}
+    registerNotifyLevel,
+};
 
