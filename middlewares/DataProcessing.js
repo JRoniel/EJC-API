@@ -9,5 +9,15 @@ async function getUserBasedOnId(id) {
       name: true
     });
   }
+ /*
+ * Correção e revisão para implementação
+// Função que busca o usuário com base no email
+async function getUserBasedOnEmail(email) {
+    return await User.findOne({ email }, {
+      name: true
+    });
+  }
+*/
+
 
 module.exports = { getUserBasedOnId }
