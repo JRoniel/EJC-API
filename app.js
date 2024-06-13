@@ -8,6 +8,8 @@ dotenv.config();
 const Language = require('./middlewares/Language');
 
 const app = express();
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 // Configura o CORS para permitir acesso de qualquer origem
 app.use((req, res, next) => {
@@ -34,8 +36,7 @@ consign()
   .into(app);
 
 app.get("/", async (req, res) => {
-  const message = Language.getMessage('NO_ROUTE_ESTABELECED');
-  res.status(200).json(message);
+  res.status(200).render('indexRender');
 });
 
 // Capturando rotas não estabelecidas (404)
