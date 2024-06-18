@@ -3,6 +3,10 @@ const { getMessage } = require('../middlewares/Language');
 const Room = require('../models/Room');
 const DataProcessing = require('../middlewares/DataProcessing');
 
+/*
+* Cria uma nova sala
+* Retorna uma mensagem de sucesso ou erro
+*/
 async function createRoom(number, name_room) {
   const existingRoom = await Room.findOne({ number });
   if (existingRoom) {
@@ -14,6 +18,10 @@ async function createRoom(number, name_room) {
   return room;
 }
 
+/*
+* Busca todas as salas
+* Retorna uma mensagem de erro ou uma lista de salas
+*/
 async function getAllRooms() {
   const rooms = await Room.find();
   if (rooms.length === 0) {
@@ -22,6 +30,10 @@ async function getAllRooms() {
   return rooms;
 }
 
+/*
+* Busca uma sala pelo número
+* Retorna uma mensagem de erro ou a sala encontrada
+*/
 async function getRoomDetails(number) {
   const room = await Room.findOne({ number });
   if (!room) {
@@ -30,6 +42,10 @@ async function getRoomDetails(number) {
   return room;
 }
 
+/*
+* Busca os usuários de uma determinada sala
+* Retorna uma mensagem de erro ou uma lista de nomes de usuários
+*/
 async function getUsersInRoom(number) {
   const room = await getRoomDetails(number);
   const userNames = await Promise.all(room.users.map(async user => {
@@ -40,6 +56,10 @@ async function getUsersInRoom(number) {
   return userNames;
 }
 
+/*
+* Adiciona um membro na sala
+* Retorna uma mensagem de erro ou a sala atualizada
+*/
 async function addUserToRoom(roomNumber, userId) {
   const room = await getRoomDetails(roomNumber);
   if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -57,6 +77,10 @@ async function addUserToRoom(roomNumber, userId) {
   return room;
 }
 
+/*
+* Remove um membro da sala
+* Retorna uma mensagem de erro ou a sala atualizada
+*/
 async function deleteRoom(roomNumber) {
   const result = await Room.deleteOne({ number: roomNumber });
   if (result.deletedCount === 0) {
@@ -66,6 +90,10 @@ async function deleteRoom(roomNumber) {
   return getMessage('ROOM_DELETED');
 }
 
+/*
+* Remove um membro da sala
+* Retorna uma mensagem de erro ou a sala atualizada
+*/
 async function removeUserFromRoom(roomNumber, userId) {
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     throw new Error(getMessage('INVALID_ID'));
