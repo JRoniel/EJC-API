@@ -31,7 +31,7 @@
 
                 // NÃO ENCONTRADO
                 NO_DATA: 'Nenhuma dado encontrado',
-                ERROR_404: 'Rota não encontrada',
+                ERROR_404: '(404) Rota não encontrada',
 
         };
 

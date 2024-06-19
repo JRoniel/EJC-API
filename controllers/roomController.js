@@ -35,7 +35,8 @@ async function getAllRooms() {
 * Retorna uma mensagem de erro ou a sala encontrada
 */
 async function getRoomDetails(number) {
-  const room = await Room.findOne({ number });
+  const numberInt = parseInt(number);
+  const room = await Room.findOne({ numberInt });
   if (!room) {
     throw new Error(getMessage('NO_DATA'));
   }

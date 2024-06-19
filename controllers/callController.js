@@ -24,43 +24,51 @@ async function openCall(roomNumber) {
 /**
  * Recebe os dados de presença e falta dos alunos e processa a atualização
  */
-async function recordAttendance(roomNumber, attendanceData) {
+async function recordAttendance(data) {
+    if (!data || !data.roomNumber || !data.attendanceData) {
+        return { message: 'Entrada incorreta' };
+    }
 
     try {
-        const room = await roomController.getRoomDetails(roomNumber);
+        const room = await roomController.getRoomDetails(data.roomNumber);
 
         if (!room) {
-            return getMessage('NO_DATA');
+            return { message: getMessage('NO_DATA') };
         }
 
-        const dataArray = Array.isArray(attendanceData) ? attendanceData : JSON.parse(attendanceData);
+        console.log("Data received for attendance:", data);
+
+        const attendanceArray = Object.keys(data.attendanceData).map(name => ({
+            name,
+            attendance: data.attendanceData[name] || 'absent'
+        }));
 
         const callRecord = new Call({
-            roomNumber,
-            attendanceData: dataArray.map(data => ({
-                name: data.name,
-                attendance: data.attendance || 'absent'
-            }))
+            roomNumber: data.roomNumber,
+            attendanceData: attendanceArray
         });
 
-        
         await callRecord.save();
-        return 'Chamada registrada';
+        return { message: 'Chamada registrada', callRecord };
 
     } catch (error) {
-        throw new Error(getMessage('INTERNAL_ERROR') + error);
-
-
-        
+        console.error("Error saving call record:", error);
+        return { message: getMessage('INTERNAL_ERROR'), error: error.message };
     }
 }
 
+
 function getCall(roomNumber) {
-    return Call.findOne({ roomNumber });
+    return Call.find({ roomNumber });
+}
+
+function getCallUser(roomNumber, name) {
+    return Call.find({ roomNumber, 'attendanceData.name': name }, { date: true });
 }
 
 module.exports = {
     openCall,
     recordAttendance,
-    getCall
+    getCall,
+    getCallUser
 };

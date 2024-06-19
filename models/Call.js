@@ -5,10 +5,6 @@ const CallSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    date: {
-        type: Date,
-        default: Date.now
-    },
     attendanceData: [{
         name: {
             type: String,
@@ -18,7 +14,17 @@ const CallSchema = new mongoose.Schema({
             type: String,
             enum: ['present', 'absent']
         }
-    }]
+    }],
+    date: {
+        type: Date,
+        default: function() {
+            var date = new Date();
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            return day + '/' + month + '/' + year;
+        }
+    }
 });
 
 module.exports = mongoose.model('Call', CallSchema);

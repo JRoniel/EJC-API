@@ -8,7 +8,7 @@ module.exports = (app) => {
 /* Retorna todas as salas */
     app.get('/room', async (req, res) => {
         try {
-            const rooms = await RoomController.getRooms();
+            const rooms = await RoomController.getAllRooms();
             if (!rooms.length) {
                 return res.status(204).json(Language.getMessage('NO_DATA'));
             }

@@ -40,20 +40,16 @@ app.get("/", async (req, res) => {
 });
 
 // Capturando rotas não estabelecidas (404)
-app.use((req, res, next) => {try {
+app.use((req, res, next) => {
   const message = Language.getMessage('ERROR_404');
-  res.status(200).json(message);
-} catch (error) {
-  res.status(500).send(Language.getMessage('INTERNAL_ERROR') + error);
-}
+  res.status(404).json(message);
 });
 
 // Tratamento de erros gerais
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send(Language.getMessage('INTERNAL_ERROR') + error);
+  res.status(500).send(Language.getMessage('INTERNAL_ERROR') + err.message);
 });
-
 
 // Inicializa a aplicacao
 const port = process.env.PORT || 3000;
