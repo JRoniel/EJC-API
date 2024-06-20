@@ -16,8 +16,13 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader(
+  'Content-Security-Policy',
+  "default-src 'self'; frame-ancestors 'self' https://example.com https://another-example.com"
+);
   next();
 });
+
 
 // Config JSON response
 app.use(express.json());
