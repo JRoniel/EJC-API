@@ -26,7 +26,9 @@ async function loginUser(req, res) {
 
   if (!comparePassword) return Language.getMessage('INVALID_PASSWORD');
 
-  return user;
+  //return user;
+  return { message: Language.getMessage('LOGIN_SUCESS'), user };
+  
 }
 
 /**

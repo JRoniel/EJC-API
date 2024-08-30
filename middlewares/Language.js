@@ -9,6 +9,7 @@
                 INITIALIZE : 'Sistema iniciado com sucesso!',  
                 MESSAGE_SUCESS: 'Mensagem enviada com sucesso',
                 REGISTER_SUCESS: 'Registro efetuado com sucesso',
+                LOGIN_SUCESS: 'Login efetuado com sucesso',
                 ACTION_SUCESS: 'Acção efetuada com sucesso',
 
                 // PERMISSÃO NÃO AUTORIZADA
