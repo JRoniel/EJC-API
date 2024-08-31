@@ -10,7 +10,7 @@
                 MESSAGE_SUCESS: 'Mensagem enviada com sucesso',
                 REGISTER_SUCESS: 'Registro efetuado com sucesso',
                 LOGIN_SUCESS: 'Login efetuado com sucesso',
-                ACTION_SUCESS: 'Acção efetuada com sucesso',
+                ACTION_SUCESS: 'Ação efetuada com sucesso',
 
                 // PERMISSÃO NÃO AUTORIZADA
                 PERMISSION_DENIED: 'Permissão não autorizada',
