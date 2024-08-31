@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const User = require('../models/User');
 const Validator = require('../middlewares/Validator');
 const Language = require('../middlewares/Language');
+const DataProcess = require('../middlewares/DataProcessing');
 
 /**
  * Faz login do usuario
@@ -26,9 +27,8 @@ async function loginUser(req, res) {
 
   if (!comparePassword) return Language.getMessage('INVALID_PASSWORD');
 
-  //return user;
-  return { message: Language.getMessage('LOGIN_SUCESS'), user };
-  
+  //return { message: Language.getMessage('LOGIN_SUCESS'), user };
+  return DataProcess.returnDataProcess('LOGIN_SUCESS', { _id: user['_id']});
 }
 
 /**
@@ -62,8 +62,7 @@ async function registerUser(req, res) {
 
   try {
     await user.save();
-
-    return Language.getMessage('REGISTER_SUCESS');
+    return DataProcess.returnDataProcess('REGISTER_SUCESS', user);
   } catch (error) {
     return Language.getMessage('INTERNAL_ERROR') + error;
   }
