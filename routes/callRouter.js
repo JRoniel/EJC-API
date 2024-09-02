@@ -1,5 +1,4 @@
 const callController = require('../controllers/callController');
-const Validator = require('../middlewares/Validator');
 const Language = require('../middlewares/Language');
 
 module.exports = (app) => {

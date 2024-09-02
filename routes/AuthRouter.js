@@ -1,5 +1,4 @@
 const AuthController = require("../controllers/authController");
-const UserController = require('../controllers/userController');
 const Language = require('../middlewares/Language');
 
 module.exports = (app) => {

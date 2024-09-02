@@ -1,7 +1,6 @@
 
 const Language = require('../middlewares/Language');
 const RoomController = require('../controllers/roomController');
-const Room = require('../models/Room');
 
 module.exports = (app) => {
 

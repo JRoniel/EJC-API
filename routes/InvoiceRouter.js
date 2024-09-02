@@ -1,7 +1,6 @@
 
 const Language = require('../middlewares/Language');
 const InvoiceController = require('../controllers/invoiceController');
-const Invoice = require('../models/Invoice');
 
 module.exports = (app) => {
 

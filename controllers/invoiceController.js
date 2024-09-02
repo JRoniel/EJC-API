@@ -1,7 +1,6 @@
 const Invoice = require('../models/Invoice');
 const Validator = require('../middlewares/Validator');
 const Language = require('../middlewares/Language');
-const { get } = require('mongoose');
 
 /**
  * Obtém uma fatura de um usuário
