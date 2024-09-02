@@ -9,13 +9,15 @@ const mongoose = require('mongoose');
  * @param {string} message - Mensagem da notificação
  * @returns {Promise<string | undefined>} - Mensagem de erro, caso haja, ou undefined caso a notificação seja registrada com sucesso
  */
-async function registerNotify(target, message) {
+async function registerNotify(byUser, target, message) {
     if (!Validator.isValidator('email', target)) {
         return Language.getMessage('INVALID_EMAIL');
     }
 
     try {
         const notify = new Notify({
+            _id: new mongoose.Types.ObjectId(),
+            byUser,
             target,
             message,
         });
@@ -33,7 +35,7 @@ async function registerNotify(target, message) {
  * @returns {Promise<Array<Notify>>} - Array de notificações do usuário
  */
 async function getNotify(email) {
-    return Notify.find({ target: email }, { message: true });
+    return Notify.find({ target: email }, { byUser: true, message: true });
 }
 
 /**
@@ -42,13 +44,14 @@ async function getNotify(email) {
  * @param {string} message - Mensagem da notificação
  * @returns {Promise<string | undefined>} - Mensagem de erro, caso haja, ou undefined caso a notificação seja registrada com sucesso
  */
-async function registerNotifyLevel(level, message) {
+async function registerNotifyLevel(byUser, level, message) {
     if (!Validator.isValidator('level', level)) {
         return Language.getMessage('INVALID_LEVEL');
     }
 
     try {
         const notify = new Notify({
+            byUser,
             level,
             message,
         });
@@ -66,7 +69,7 @@ async function registerNotifyLevel(level, message) {
  * @returns {Promise<Array<Notify>>} - Array de notificações do usuário
  */
 function getNotifyLevel(level) {
-    return Notify.find({ level }, { message: true });
+    return Notify.find({ level }, { byUser: true, message: true });
 }
 
 module.exports = {

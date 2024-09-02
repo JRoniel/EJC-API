@@ -11,7 +11,7 @@ module.exports = (app) => {
      * @returns {Promise<Object>} - Retorna o usuario caso o cadastro seja feito com sucesso, caso contrario retorna um erro
      */
     app.post("/notify/", async (req, res) => {
-        const { email, message } = req.body;
+        const { byUser, email, message } = req.body;
 
         if(!Validator.isValidator('email', email)) {
             return res.status(422).json(Language.getMessage('INVALID_EMAIL'));
@@ -22,7 +22,7 @@ module.exports = (app) => {
         }
 
         try {
-            const notify = await NotifyController.registerNotify(email, message);
+            const notify = await NotifyController.registerNotify(byUser, email, message);
             return res.status(200).json(Language.getMessage('MESSAGE_SUCESS'));
         } catch (error) {
             res.status(422).json(Language.getMessage('INTERNAL_ERROR' + error));
@@ -49,6 +49,7 @@ module.exports = (app) => {
                 return res.status(204).json(Language.getMessage('NO_DATA'));
             }
             return res.status(200).json(notifies);
+            
         } catch (error) {
             res.status(500).send(Language.getMessage('INTERNAL_ERROR' + error));
         }
@@ -62,7 +63,7 @@ module.exports = (app) => {
     */    
     app.get("/notify/level/", async (req, res) => {
      
-        const { level } = req.body;
+        const { level } = req.query;
         if(!Validator.isValidator('level', level)) {
             return res.status(422).json(Language.getMessage('INVALID_LEVEL'));
         }
