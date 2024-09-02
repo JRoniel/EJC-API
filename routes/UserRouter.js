@@ -10,7 +10,7 @@ module.exports = (app) => {
     */
     app.post("/user/search", async (req, res) => {
         try {
-            const userId = req.body;
+            const userId = req.body['token'];
             const i = await UserController.getUser(userId);
             res.status(200).json(i);
         } catch (error) {
